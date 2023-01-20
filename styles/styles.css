@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap');
 
+/* \\\ GLOBAL CLASSES  //// */
+
 body {
     margin: 0;
     padding: 0;
@@ -8,6 +10,41 @@ body {
     overflow-y: hidden;
     font-family: 'Roboto', sans-serif;
 }
+
+.column-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.bg-size {
+    width: 100%;
+    height: 100vh;
+}
+
+.pip {
+    font-family: 'Lilita One', cursive;
+}
+
+#start-button {
+    font-size: 2rem;
+    background-color: #be242c;
+    background: linear-gradient(0deg, #be242c, #fb1e29, #be242c);
+    color: rgb(249, 253, 6);
+    padding: 1.25rem 2rem;
+    border: 0;
+    border-radius: 5px;
+    box-shadow: inset 5px 3px 20px rgb(119, 28, 28), inset -5px -3px 20px rgb(119, 28, 28);
+    text-transform: uppercase;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-top: 2rem;
+}
+
+/* \\\ LANDING PAGE //// */
+/* \\\ LANDING PAGE //// */
+/* \\\ LANDING PAGE //// */
 
 .moving-bg {
     display: none;
@@ -26,17 +63,6 @@ body {
     }   
 }
 
-.column-center {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.bg-size {
-    width: 100%;
-    height: 100vh;
-}
 .game-intro {
     background: url('../images/introBG.png');
     background-repeat: no-repeat;
@@ -75,9 +101,7 @@ body {
         background-position: 0 50%;
     }
 }
-.pip {
-    font-family: 'Lilita One', cursive;
-}
+
 .title-intro:nth-child(1) {
     font-size: 5.5rem;
     padding: 0 .7rem
@@ -93,21 +117,6 @@ body {
     margin: 0;
 }
 
-#start-button {
-    font-size: 2rem;
-    background-color: #be242c;
-    background: linear-gradient(0deg, #be242c, #fb1e29, #be242c);
-    color: rgb(249, 253, 6);
-    padding: 1.25rem 2rem;
-    border: 0;
-    border-radius: 5px;
-    box-shadow: inset 5px 3px 20px rgb(119, 28, 28), inset -5px -3px 20px rgb(119, 28, 28);
-    text-transform: uppercase;
-    font-size: 1.3rem;
-    font-weight: 700;
-    margin-top: 2rem;
-}
-
 .rules {
     color: rgb(239, 238, 238);
     font-size: 1rem;
@@ -116,7 +125,15 @@ body {
     margin: 0;
 }
 
+/* \\\ END LANDING PAGE //// */
+/* \\\ END LANDING PAGE //// */
+/* \\\ END LANDING PAGE //// */
+
+/* \\\ GAME OVER //// */
+/* \\\ GAME OVER //// */
+/* \\\ GAME OVER //// */
 .game-over-bg {
+    display: none;
     background: linear-gradient(45deg, rgb(64, 134, 226), rgb(113, 170, 232), rgb(102, 211, 238));
     background-size: 300% 300%;
     animation: animateTitle 10s ease infinite;
@@ -149,6 +166,10 @@ body {
     font-size: 2rem;
     margin: 30px auto;
 }
+
+/* \\\ END GAME OVER //// */
+/* \\\ END GAME OVER //// */
+/* \\\ END GAME OVER //// */
 
 @media screen and (max-width: 560px) {
     html {
