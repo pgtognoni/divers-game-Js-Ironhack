@@ -25,6 +25,8 @@ body {
 
 .pip {
     font-family: 'Lilita One', cursive;
+    font-size: 1.8rem;
+    letter-spacing: 1.5px;
 }
 
 #start-button {
@@ -67,8 +69,8 @@ body {
 
 .intro-container {
     margin-left: 6rem;
-    width: 30rem;
-    margin-top: -10rem;
+    width: 33rem;
+    margin-top: -5rem;
 }
 
 .text-bg {
@@ -94,7 +96,7 @@ body {
 }
 
 .title-intro:nth-child(1) {
-    font-size: 5.5rem;
+    font-size: 7rem;
     padding: 0 .7rem
 }
 .title-intro:nth-child(2) {
