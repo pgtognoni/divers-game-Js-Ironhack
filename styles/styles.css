@@ -47,20 +47,10 @@ body {
 /* \\\ LANDING PAGE //// */
 
 .moving-bg {
-    display: none;
-    background: url('../images/seaBGCrop.png');
+    /* display: none; */
+    background: url('../images/seaBG1.png');
     background-size: cover;
-    animation: slideIn 70s;
-}
-@keyframes slideIn {
-    from {
-        background-position: top;
-        background-size: 200%; 
-    }
-    to {
-        background-position: -100px 0px;
-        background-size: 175%;
-    }   
+    animation: wave 10s ease-in-out infinite;
 }
 
 .game-intro {
@@ -143,7 +133,7 @@ body {
     background: url("../images/seaBG.png");
     background-repeat: no-repeat;
     background-size: 120%;
-    animation: wave 15s ease infinite;
+    animation: wave 15s ease-in-out infinite;
 }
 
 @keyframes wave {
