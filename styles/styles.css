@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-y: hidden;
+    font-family: 'Roboto', sans-serif;
+}
+
+.moving-bg {
+    display: none;
+    background: url('../images/seaBGCrop.png');
+    background-size: cover;
+    animation: slideIn 70s;
+}
+@keyframes slideIn {
+    from {
+        background-position: top;
+        background-size: 200%; 
+    }
+    to {
+        background-position: -100px 0px;
+        background-size: 175%;
+    }   
+}
+
+.column-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.bg-size {
+    width: 100%;
+    height: 100vh;
+}
+.game-intro {
+    background: url('../images/introBG.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#game-board {
+    display: none;
+    margin: 0;
+    padding: 0;
+}
+
+.intro-container {
+    margin-left: 6rem;
+    width: 25rem;
+}
+
+.text-bg {
+    background: linear-gradient(45deg, rgb(240, 89, 89), rgb(250, 240, 42), rgb(240, 89, 89));
+    background-size: 300% 300%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    animation: animateTitle 10s ease infinite;
+}
+
+@keyframes animateTitle {
+    0% {
+        background-position: 0 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0 50%;
+    }
+}
+.pip {
+    font-family: 'Lilita One', cursive;
+}
+.title-intro:nth-child(1) {
+    font-size: 5.5rem;
+    padding: 0 .7rem
+}
+.title-intro:nth-child(2) {
+    margin-bottom: 1.2rem;
+}
+
+.title-intro {
+    font-size: 4.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin: 0;
+}
+
+#start-button {
+    font-size: 2rem;
+    background-color: #be242c;
+    background: linear-gradient(0deg, #be242c, #fb1e29, #be242c);
+    color: rgb(249, 253, 6);
+    padding: 1.25rem 2rem;
+    border: 0;
+    border-radius: 5px;
+    box-shadow: inset 5px 3px 20px rgb(119, 28, 28), inset -5px -3px 20px rgb(119, 28, 28);
+    text-transform: uppercase;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-top: 2rem;
+}
+
+.rules {
+    color: rgb(239, 238, 238);
+    font-size: 1rem;
+    text-align: center;
+    line-height: 2rem;
+    margin: 0;
+}
+
+.game-over-bg {
+    background: linear-gradient(45deg, rgb(64, 134, 226), rgb(113, 170, 232), rgb(102, 211, 238));
+    background-size: 300% 300%;
+    animation: animateTitle 10s ease infinite;
+}
+
+.game-over-sea {
+    background: url("../images/seaBG.png");
+    background-repeat: no-repeat;
+    background-size: 120%;
+    animation: wave 15s ease infinite;
+}
+
+@keyframes wave {
+    0% {
+        background-position: -20px 78%;  
+    }
+    50% {
+        background-position: 0px 77%;
+    } 
+    100% {
+        background-position: -20px 78%; 
+    }   
+}
+
+.game-over-container {
+    height: 100vh;
+}
+
+.score {
+    font-size: 2rem;
+    margin: 30px auto;
+}
+
+@media screen and (max-width: 560px) {
+    html {
+        font-size: 1px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    html {
+        font-size: 10px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    html {
+        font-size: 12px;
+    }
+}
