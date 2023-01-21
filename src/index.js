@@ -1,8 +1,7 @@
+/*/--- Background Image ---/*/
+/*/--- Background Image ---/*/
 let height = 0;
 let width = 0;
-
-/*/--- Background Image ---/*/
-/*/--- Background Image ---/*/
 
 const canvasbg = document.querySelector('#canvas-bg')
 const bgctx = canvasbg.getContext('2d');
@@ -63,7 +62,7 @@ pip.src = '../images/scuba.png';
 const drawPip = () => {
 
     ctx.drawImage(pip, pipX, pipY, canvasX*2, canvasY*2)
-
+   
     if (isMovingUP && pipY > canvasY/3) {
         pipY -= pipSpeed
     }
@@ -71,6 +70,13 @@ const drawPip = () => {
         pipY += pipSpeed
     }
 }
+/*/--- End ---/*/
+
+/*/--- AQUA LIFE ---/*/
+/*/--- AQUA LIFE ---/*/
+
+
+
 /*/--- End ---/*/
 
 /*/--- Animate ---/*/
