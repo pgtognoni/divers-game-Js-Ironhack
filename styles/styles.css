@@ -49,7 +49,7 @@ body {
 /* \\\ LANDING PAGE //// */
 
 .moving-bg {
-    /* display: none; */
+    display: none;
     background: url('../images/seaBG1.png');
     background-size: cover;
     animation: wave 10s ease-in-out infinite;
@@ -62,7 +62,6 @@ body {
 }
 
 #game-board {
-    display: none;
     margin: 0;
     padding: 0;
 }
