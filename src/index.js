@@ -64,7 +64,7 @@ const drawPip = () => {
 
     ctx.drawImage(pip, pipX, pipY, canvasX*2, canvasY*2)
 
-    if (isMovingUP && pipY > canvasY/10 - 10) {
+    if (isMovingUP && pipY > canvasY/3) {
         pipY -= pipSpeed
     }
     if (isMovingDown && pipY < canvasY*10 - canvasY*10/4) {
