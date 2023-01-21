@@ -61,11 +61,6 @@ body {
     background-size: cover;
 }
 
-#game-board {
-    margin: 0;
-    padding: 0;
-}
-
 .intro-container {
     margin-left: 6rem;
     width: 33rem;
@@ -120,6 +115,33 @@ body {
 /* \\\ END LANDING PAGE //// */
 /* \\\ END LANDING PAGE //// */
 /* \\\ END LANDING PAGE //// */
+
+/* \\\ GAME BOARD //// */
+/* \\\ GAME BOARD //// */
+/* \\\ GAME BOARD //// */
+
+#game-board {
+    position: relative;
+}
+
+#canvas-bg {
+    position: absolute;
+    z-index: -1;
+    background: linear-gradient(60deg, rgb(52, 201, 255), rgb(4, 136, 197), rgb(110, 184, 244), rgb(31, 132, 203));
+    background-size: 300% 300%;
+    animation: animateTitle 10s ease infinite;
+}
+
+#canvas-game {
+    position: absolute;
+    z-index: 1;
+    width: 100vw !important;
+    height: 100vh !important;
+}
+
+/* \\\ END GAME BOARD //// */
+/* \\\ END GAME BOARD //// */
+/* \\\ END GAME BOARD //// */
 
 /* \\\ GAME OVER //// */
 /* \\\ GAME OVER //// */
