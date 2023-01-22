@@ -1,6 +1,7 @@
 const srcObj = {
     50: [
         '../images/50/crab.png',
+        '../images/100/erizo.png',
     ],
     75: [
         '../images/75/goldenfish.png',
@@ -11,18 +12,12 @@ const srcObj = {
     100: [
         '../images/100/blueFish.png',
         '../images/100/boy1.png',
-        '../images/100/erizo.png',
         '../images/100/orangefish.png',
-        '../images/100/camera.png',
-        '../images/100/cocan.png'
     ],
     300: [
         '../images/300/girl1.png',
         '../images/300/jelly1.png',
         '../images/300/jelly2.png',
-        '../images/300/plasticbag.png',
-        '../images/300/plasticbag1.png',
-        '../images/300/plasticbag2.png',
     ],
     500: [
         '../images/500/seaHorse1.png',
@@ -33,8 +28,6 @@ const srcObj = {
         '../images/1000/octopus.png',
         '../images/1000/seaHorse.png',
         '../images/500/turtle2.png',
-        '../images/500/plasticbottle.png',
-        '../images/500/plasticbottle1.png',
     ],
     1000: [
         '../images/1000/submarine/submarine1.png',
@@ -67,6 +60,15 @@ const srcObj = {
     ],
     explosion: [
         '../images/explosion.png',
+    ],
+    garbage: [
+        '../images/100/camera.png',
+        '../images/100/cocan.png',
+        '../images/300/plasticbag.png',
+        '../images/300/plasticbag1.png',
+        '../images/300/plasticbag2.png',
+        '../images/500/plasticbottle.png',
+        '../images/500/plasticbottle1.png',
     ]
 }
 
@@ -77,6 +79,7 @@ const createNew = (srcObj) => {
     const scoresArr = [];
     const bulletsArr = [];
     const explosionArr = [];
+    const garbageArr = [];
     
     for(let value in srcObj) {
         if(value == 50 || value == 75 || value == 100 || value == 300 || value == 500) {
@@ -141,10 +144,20 @@ const createNew = (srcObj) => {
                 }
                 bulletsArr.push(bullet)
             });
-        }   
+        } else if(value == 'garbage') {
+            srcObj[value].forEach(src => {
+                const garbage =  {
+                    family: 'garbage',
+                    src: src,
+                    value: 100
+                }
+                garbageArr.push(garbage)
+            });
+        }
+           
     }
 
-    return  [lifeArr, humansArr, scoresArr, bulletsArr, explosionArr]
+    return  [lifeArr, humansArr, scoresArr, bulletsArr, explosionArr, garbageArr]
 }
 
 const imageArr = createNew(srcObj);
@@ -152,17 +165,6 @@ const imageArr = createNew(srcObj);
 //console.log(imageArr)
 
 
-// else if(value == 'garbage') {
-//     console.log(srcObj[value], value)
-//     srcObj[value].forEach(src => {
-//         const garbage =  {
-//             family: 'garbage',
-//             src: src,
-//             value: parseInt(value)
-//         }
-//         garbageArr.push(garbage)
-//     });
-// }
 // garbage: [
 //     '../images/garbage/camera.png',
 //     '../images/garbage/cocan.png',
@@ -172,3 +174,35 @@ const imageArr = createNew(srcObj);
 //     '../images/garbage/plasticbottle.png',
 //     '../images/garbage/plasticbottle1.png',
 // ],
+
+else if (count % 50 == 0) {
+        const arr = imageArr[5]
+        const width = canvasX;
+        const height = canvasY*1.2;
+        const newObstacle = createElement(arr, width, height)
+        objArr.garbageArr.push(newObstacle)
+    } else if (count % 50 == 0) {
+        const arr = imageArr[5]
+        const width = canvasX;
+        const height = canvasY*1.2;
+        const newObstacle = createElement(arr, width, height)
+        objArr.garbageArr.push(newObstacle)
+    } else if (count % 50 == 0) {
+        const arr = imageArr[5]
+        const width = canvasX;
+        const height = canvasY*1.2;
+        const newObstacle = createElement(arr, width, height)
+        objArr.garbageArr.push(newObstacle)
+    } else if (count % 50 == 0) {
+        const arr = imageArr[5]
+        const width = canvasX;
+        const height = canvasY*1.2;
+        const newObstacle = createElement(arr, width, height)
+        objArr.garbageArr.push(newObstacle)
+    } else if (count % 50 == 0) {
+        const arr = imageArr[5]
+        const width = canvasX;
+        const height = canvasY*1.2;
+        const newObstacle = createElement(arr, width, height)
+        objArr.garbageArr.push(newObstacle)
+    }

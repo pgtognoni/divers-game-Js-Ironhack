@@ -4,6 +4,8 @@
 const srcObj = {
     50: [
         '../images/50/crab.png',
+        '../images/100/erizo.png',
+        '../images/1000/seaHorse.png',
     ],
     75: [
         '../images/75/goldenfish.png',
@@ -14,39 +16,28 @@ const srcObj = {
     100: [
         '../images/100/blueFish.png',
         '../images/100/boy1.png',
-        '../images/100/erizo.png',
         '../images/100/orangefish.png',
-        '../images/100/camera.png',
-        '../images/100/cocan.png'
     ],
     300: [
         '../images/300/girl1.png',
         '../images/300/jelly1.png',
-        '../images/300/jelly2.png',
-        '../images/300/plasticbag.png',
-        '../images/300/plasticbag1.png',
-        '../images/300/plasticbag2.png',
+        '../images/5000/mine.png'
     ],
     500: [
         '../images/500/seaHorse1.png',
-        '../images/500/shark.png',
-        '../images/500/shark3.png',
-        '../images/500/shark4.png',
         '../images/500/turtle1.png',
         '../images/1000/octopus.png',
-        '../images/1000/seaHorse.png',
         '../images/500/turtle2.png',
-        '../images/500/plasticbottle.png',
-        '../images/500/plasticbottle1.png',
     ],
     1000: [
+        '../images/500/shark3.png',
+        '../images/500/shark4.png',
         '../images/1000/submarine/submarine1.png',
         '../images/1000/submarine/submarine2.png',
         '../images/1000/diverHarpoon.png',
     ],
     5000: [
         '../images/5000/aquaman.png',
-        '../images/5000/mine.png'
     ],
     bullets: [
         '../images/bullets/shell.png',
@@ -70,6 +61,15 @@ const srcObj = {
     ],
     explosion: [
         '../images/explosion.png',
+    ],
+    garbage: [
+        '../images/100/camera.png',
+        '../images/100/cocan.png',
+        '../images/300/plasticbag.png',
+        '../images/300/plasticbag1.png',
+        '../images/300/plasticbag2.png',
+        '../images/500/plasticbottle.png',
+        '../images/500/plasticbottle1.png',
     ]
 }
 
@@ -80,6 +80,7 @@ const createNew = (srcObj) => {
     const scoresArr = [];
     const bulletsArr = [];
     const explosionArr = [];
+    const garbageArr = [];
     
     for(let value in srcObj) {
         if(value == 50 || value == 75 || value == 100 || value == 300 || value == 500) {
@@ -92,7 +93,6 @@ const createNew = (srcObj) => {
                 lifeArr.push(val)
             });
         } else if(value == 5000 || value == 1000) {
-            //console.log(srcObj[value])
             srcObj[value].forEach(src => {
                 const val =  {
                     family: 'humans',
@@ -113,8 +113,6 @@ const createNew = (srcObj) => {
         } else if(value == 'scores') {
             
             srcObj[value].forEach(src => {
-                let value = 0;
-                let green = ""
                 if (src.match(/G/g)) {
                     let num = src.split('G').filter(item => item.match(/.png/)).map(item => item.replace(".png", "")).toString()
                     const score =  {
@@ -144,10 +142,20 @@ const createNew = (srcObj) => {
                 }
                 bulletsArr.push(bullet)
             });
-        }   
+        } else if(value == 'garbage') {
+            srcObj[value].forEach(src => {
+                const garbage =  {
+                    family: 'garbage',
+                    src: src,
+                    value: 100
+                }
+                garbageArr.push(garbage)
+            });
+        }
+           
     }
 
-    return  [lifeArr, humansArr, scoresArr, bulletsArr, explosionArr]
+    return  [lifeArr, humansArr, scoresArr, bulletsArr, explosionArr, garbageArr]
 }
 
 const imageArr = createNew(srcObj);
@@ -171,10 +179,14 @@ let seaX = -50;
 let seaY = -50; 
 let bgMove = .1;
 
+const boat = new Image();
+boat.src = '../images/naufragio.png'
+
 const drawBG = () => {
     bgctx.globalAlpha = 0.5;
     bgctx.drawImage(bgImg, seaX, seaY, bgX + 50, bgY+50);
-    
+    bgctx.drawImage(boat, bgX/1.45, bgY/2.8, 90, 60)
+
     seaX += bgMove
     
     if(seaX > -1) {
@@ -198,13 +210,16 @@ canvas.height = 1080;
 const canvasX = canvas.width;
 const canvasY = canvas.height;
 ctx.scale(.1,.1)
-//console.log(canvasX, canvasY)
 
 /*/--- Global Variables ---/*/
+const minY = canvasY/2;
+const maxY = canvasY*10 - canvasY*10/4.5
 let isMovingUP = false
 let isMovingDown = false
 let gameOver = false;
 let score = 0;
+let positionY = 0;
+let speedX = 30;
 
 /*/--- End ---/*/
 
@@ -216,14 +231,18 @@ let pipY = canvasY*4;
 let pipSpeed = 100;
 pip.src = '../images/scuba.png';
 
+const coral = new Image();
+coral.src = '../images/coral.png'
+
 const drawPip = () => {
 
     ctx.drawImage(pip, pipX, pipY, canvasX*2, canvasY*2)
+    ctx.drawImage(coral, canvasX/0.35, canvasY*6.2, canvasX*4, canvasY*4)
    
-    if (isMovingUP && pipY > canvasY/3) {
+    if (isMovingUP && pipY > minY) {
         pipY -= pipSpeed
     }
-    if (isMovingDown && pipY < canvasY*10 - canvasY*10/4) {
+    if (isMovingDown && pipY < maxY) {
         pipY += pipSpeed
     }
 }
@@ -232,31 +251,193 @@ const drawPip = () => {
 /*/--- AQUA LIFE ---/*/
 /*/--- AQUA LIFE ---/*/
 
-let fishY = canvasY;
-let fishX = canvasX*10;
+const objArr = {
+    array50: [],
+    array75: [],
+    array100: [],
+    array300: [],
+    array500: [],
+    garbageArr: [],
+}
+const humanObj = {
+    array1000: [],
+    array5000: [],
+}
+const explosionArr= [];
+const bulletsArr= [];
+const scoreArr= [];
 
-const drawFish = () => {
+const pushToArray = () => {
+    imageArr.forEach(array => {
+        array.forEach(item => {
+            switch(item.family) {
+                case 'scores':
+                    return scoreArr.push(item);
+                case 'bullets':
+                    return bulletsArr.push(item);
+                case 'explosion':
+                    return explosionArr.push(item);      
+            }
+        })
+    })
+}
 
-    let src = imageArr[0][0].src;
-    const fish = new Image();
-    fish.src = src;
+class Objstacle {
+    constructor(positionY, width, height, src, family, value) {
+        this.positionX = canvasX*10;
+        this.positionY = positionY;
+        this.width = width;
+        this.height = height;
+        this.src = src;
+        this.name = family;
+        this.value = value;
+    }
 
-    ctx.drawImage(fish, fishX, fishY, canvasX*2, canvasY*2)
+    createObject = () => {
+        const obstacle = new Image();
+        obstacle.src = this.src;
+        obstacle.setAttribute('data-name', this.name);
+        obstacle.setAttribute('data-value', this.value);
+
+        ctx.drawImage(obstacle, this.positionX, this.positionY, this.width, this.height)
+    }
+}
+
+const createElement = (array, width, height) => {
+
+    const index = Math.floor(Math.random() * array.length);
+    const src = array[index].src;
+    const value = array[index].value;
+    const family = array[index].family;
+    const posY = positionY
+    const newObstacle = new Objstacle(posY, width, height, src, family, value);
+
+    return newObstacle;
+}
+
+const createHuman = (array, width, height) => {
     
-    fishX -= 50
-         
+    const maxHumanY = canvasY*5.5
+    let humanY = Math.floor(Math.random() * (maxHumanY - minY + 1) + minY);
+
+    const index = Math.floor(Math.random() * array.length);
+    const src = array[index].src;
+    const value = array[index].value;
+    const family = array[index].family;
+    const posY = humanY
+    const newObstacle = new Objstacle(posY, width, height, src, family, value);
+
+    return newObstacle;
+}
+
+const drawFish = (count) => {
+
+    positionY = Math.floor(Math.random() * (maxY - minY + 1) + minY);
+    
+    if (count % 100 == 0) {
+        const arr = imageArr[0].filter(item => item.value == 50)
+        const width = canvasX;
+        const height = canvasY*1.3;
+        const newObstacle = createElement(arr, width, height)
+        objArr.array50.push(newObstacle)
+    } else if (count % 35 == 0) {
+        const arr = imageArr[5]
+        const width = canvasX;
+        const height = canvasY*1.2;
+        const newObstacle = createElement(arr, width, height)
+        objArr.garbageArr.push(newObstacle)
+    } else if (count % 310 == 0) {
+        const arr = imageArr[1].filter(item => item.value == 5000)
+        const width = canvasX*4;
+        const height = canvasY*4;
+        const newObstacle = createHuman(arr, width, height)
+        humanObj.array5000.push(newObstacle)
+        console.log(humanObj)
+    } else if (count % 470 == 0) {
+        const arr = imageArr[1].filter(item => item.value == 1000)
+        const width = canvasX*5;
+        const height = canvasY*5;
+        const newObstacle = createHuman(arr, width, height)
+        humanObj.array1000.push(newObstacle)
+    } else if (count % 240 == 0) {
+        const arr = imageArr[0].filter(item => item.value == 75)
+        const width = canvasX;
+        const height = canvasY*1.2;
+        const newObstacle = createElement(arr, width, height)
+        objArr.array75.push(newObstacle)
+    } else if (count % 165 == 0) {
+        const arr = imageArr[0].filter(item => item.value == 100)
+        const width = canvasX*1.7;
+        const height = canvasY*1.8;
+        const newObstacle = createElement(arr, width, height)
+        objArr.array100.push(newObstacle)
+    } else if (count % 85 == 0) {
+        const arr = imageArr[0].filter(item => item.value == 300)
+        const width = canvasX*1.4;
+        const height = canvasY*2;
+        const newObstacle = createElement(arr, width, height)
+        objArr.array300.push(newObstacle)
+    } else if (count % 140 == 0) {
+        const arr = imageArr[0].filter(item => item.value == 500)
+        const width = canvasX*1.5;
+        const height = canvasY*1.7;
+        const newObstacle = createElement(arr, width, height)
+        objArr.array500.push(newObstacle)
+    }        
 }
 
 /*/--- End ---/*/
 
 /*/--- Animate ---/*/
+let countForPush = 0; 
+let fishMvY = -10;
+let countMov = 0;
 
 const animate = () => {
     bgctx.clearRect(0, 0, bgX, bgY)
     ctx.clearRect(0, 0, canvasX*10, canvasY*10)
     drawBG()
     drawPip()
-    drawFish()
+    
+    for (let array in objArr) {
+        objArr[array].forEach(item => {
+            item.createObject();
+            item.positionX -= speedX
+            item.positionY += fishMvY
+            countMov += fishMvY
+            
+            if(countMov < -750) {
+                fishMvY = 3
+            } else if (countMov > 750) {
+                fishMvY = -3
+            }
+
+            if(item.positionX < -2500) {
+                objArr[array].shift()
+            }
+        })
+    }
+
+    if(humanObj.array5000.length >= 1 || humanObj.array1000.length >= 1) {
+        for(let array in humanObj) {
+            humanObj[array].forEach(item => {
+                item.createObject();
+                item.positionX -= 30
+                item.positionY += fishMvY
+                countMov += fishMvY
+                
+                if(countMov < -750) {
+                    fishMvY = 2
+                } else if (countMov > 750) {
+                    fishMvY = -2
+                }
+    
+                if(item.positionX < -10000) {
+                    humanObj[array].shift()
+                }
+            })
+        }
+    }
 
     if(!gameOver) {
         animateGameID = requestAnimationFrame(animate)
@@ -264,7 +445,26 @@ const animate = () => {
         cancelAnimationFrame(animateGameId);
     }
     
-    if (animateGameID % 100 === 0) {
+
+    if (animateGameID % 10 === 0) {
+        countForPush +=  1
+        if(countForPush % 100 === 0) {
+            drawFish(countForPush)
+        } else if (countForPush % 35 === 0) {
+            drawFish(countForPush)
+        } else if (countForPush % 310 === 0) {
+            drawFish(countForPush)
+        } else if (countForPush % 470 === 0) {
+            drawFish(countForPush)
+        } else if (countForPush % 240 === 0) {
+            drawFish(countForPush)
+        } else if (countForPush % 165 === 0) {
+            drawFish(countForPush)
+        } else if (countForPush % 85 === 0) {
+            drawFish(countForPush)
+        } else if (countForPush % 140 === 0) {
+            drawFish(countForPush)
+        }
     }
 }
 
@@ -286,6 +486,7 @@ window.onload = () => {
 
     setCanvasSize()
     animate()
+    drawFish(100)
 
     window.addEventListener("resize",setCanvasSize,false);
 
