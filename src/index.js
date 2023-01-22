@@ -39,10 +39,6 @@ const srcObj = {
     5000: [
         '../images/5000/aquaman.png',
     ],
-    bullets: [
-        '../images/bullets/shell.png',
-        '../images/bullets/star.png',
-    ],
     scores: [
         '../images/buttons/G50.png',
         '../images/buttons/G75.png',
@@ -58,9 +54,6 @@ const srcObj = {
         '../images/buttons/R500.png',
         '../images/buttons/R1000.png',
         '../images/buttons/R5000.png',
-    ],
-    explosion: [
-        '../images/explosion.png',
     ],
     garbage: [
         '../images/100/camera.png',
@@ -207,13 +200,13 @@ const ctx = canvas.getContext('2d');
 canvas.width = 1920;
 canvas.height = 1080;
 
-const canvasX = canvas.width;
-const canvasY = canvas.height;
+const CANVAS_X = canvas.width;
+const CANVAS_Y = canvas.height;
 ctx.scale(.1,.1)
 
 /*/--- Global Variables ---/*/
-const minY = canvasY/2;
-const maxY = canvasY*10 - canvasY*10/4.5
+const minY = CANVAS_Y/2;
+const maxY = CANVAS_Y*10 - CANVAS_Y*10/4.5
 let isMovingUP = false
 let isMovingDown = false
 let gameOver = false;
@@ -226,18 +219,27 @@ let speedX = 30;
 /*/--- PIP ---/*/
 /*/--- PIP ---/*/
 const pip = new Image();
-const pipX = canvasX/2;
-let pipY = canvasY*4;
+const pipX = CANVAS_X/2;
+let pipY = CANVAS_Y*4;
 let pipSpeed = 100;
 pip.src = '../images/scuba.png';
 
 const coral = new Image();
 coral.src = '../images/coral.png'
 
+const bullet = new Image();
+bullet.src = '../images/bullets/star.png'
+let bulletX = -1000;
+let bulletY = -1000;
+const bulletW = CANVAS_X *0.8;
+const bulletH = CANVAS_Y;
+
 const drawPip = () => {
 
-    ctx.drawImage(pip, pipX, pipY, canvasX*2, canvasY*2)
-    ctx.drawImage(coral, canvasX/0.35, canvasY*6.2, canvasX*4, canvasY*4)
+    ctx.drawImage(pip, pipX, pipY, CANVAS_X*2, CANVAS_Y*2)
+    ctx.drawImage(coral, CANVAS_X/0.35, CANVAS_Y*6.2, CANVAS_X*4, CANVAS_Y*4)
+    ctx.drawImage(bullet, bulletX, bulletY, bulletW, bulletH)
+    //console.log(bulletX)
    
     if (isMovingUP && pipY > minY) {
         pipY -= pipSpeed
@@ -248,8 +250,8 @@ const drawPip = () => {
 }
 /*/--- End ---/*/
 
-/*/--- AQUA LIFE ---/*/
-/*/--- AQUA LIFE ---/*/
+/*/--- OBSTACLES ---/*/
+/*/--- OBSTACLES ---/*/
 
 const objArr = {
     array50: [],
@@ -263,8 +265,7 @@ const humanObj = {
     array1000: [],
     array5000: [],
 }
-const explosionArr= [];
-const bulletsArr= [];
+
 const scoreArr= [];
 
 const pushToArray = () => {
@@ -284,7 +285,7 @@ const pushToArray = () => {
 
 class Objstacle {
     constructor(positionY, width, height, src, family, value) {
-        this.positionX = canvasX*10;
+        this.positionX = CANVAS_X*10;
         this.positionY = positionY;
         this.width = width;
         this.height = height;
@@ -317,7 +318,7 @@ const createElement = (array, width, height) => {
 
 const createHuman = (array, width, height) => {
     
-    const maxHumanY = canvasY*5.5
+    const maxHumanY = CANVAS_Y*5.5
     let humanY = Math.floor(Math.random() * (maxHumanY - minY + 1) + minY);
 
     const index = Math.floor(Math.random() * array.length);
@@ -336,54 +337,99 @@ const drawFish = (count) => {
     
     if (count % 100 == 0) {
         const arr = imageArr[0].filter(item => item.value == 50)
-        const width = canvasX;
-        const height = canvasY*1.3;
+        const width = CANVAS_X;
+        const height = CANVAS_Y*1.3;
         const newObstacle = createElement(arr, width, height)
         objArr.array50.push(newObstacle)
     } else if (count % 35 == 0) {
         const arr = imageArr[5]
-        const width = canvasX;
-        const height = canvasY*1.2;
+        const width = CANVAS_X;
+        const height = CANVAS_Y*1.2;
         const newObstacle = createElement(arr, width, height)
         objArr.garbageArr.push(newObstacle)
-    } else if (count % 310 == 0) {
+    } else if (count % 1200 == 0) {
         const arr = imageArr[1].filter(item => item.value == 5000)
-        const width = canvasX*4;
-        const height = canvasY*4;
+        const width = CANVAS_X*4;
+        const height = CANVAS_Y*4;
         const newObstacle = createHuman(arr, width, height)
         humanObj.array5000.push(newObstacle)
         console.log(humanObj)
-    } else if (count % 470 == 0) {
+    } else if (count % 670 == 0) {
         const arr = imageArr[1].filter(item => item.value == 1000)
-        const width = canvasX*5;
-        const height = canvasY*5;
+        const width = CANVAS_X*5;
+        const height = CANVAS_Y*5;
         const newObstacle = createHuman(arr, width, height)
         humanObj.array1000.push(newObstacle)
     } else if (count % 240 == 0) {
         const arr = imageArr[0].filter(item => item.value == 75)
-        const width = canvasX;
-        const height = canvasY*1.2;
+        const width = CANVAS_X;
+        const height = CANVAS_Y*1.2;
         const newObstacle = createElement(arr, width, height)
         objArr.array75.push(newObstacle)
     } else if (count % 165 == 0) {
         const arr = imageArr[0].filter(item => item.value == 100)
-        const width = canvasX*1.7;
-        const height = canvasY*1.8;
+        const width = CANVAS_X*1.7;
+        const height = CANVAS_Y*1.8;
         const newObstacle = createElement(arr, width, height)
         objArr.array100.push(newObstacle)
-    } else if (count % 85 == 0) {
+    } else if (count % 385 == 0) {
         const arr = imageArr[0].filter(item => item.value == 300)
-        const width = canvasX*1.4;
-        const height = canvasY*2;
+        const width = CANVAS_X*1.4;
+        const height = CANVAS_Y*2;
         const newObstacle = createElement(arr, width, height)
         objArr.array300.push(newObstacle)
     } else if (count % 140 == 0) {
         const arr = imageArr[0].filter(item => item.value == 500)
-        const width = canvasX*1.5;
-        const height = canvasY*1.7;
+        const width = CANVAS_X*1.5;
+        const height = CANVAS_Y*1.7;
         const newObstacle = createElement(arr, width, height)
         objArr.array500.push(newObstacle)
     }        
+}
+
+/*/--- End ---/*/
+
+/*/--- BULLETS ---/*/
+/*/--- BULLETS ---/*/
+let bulletSpeed = 300;
+let isShooting = false;
+let shot = false;
+
+const bulletShoot = () => {
+    if(isShooting === true && shot == false) {
+        bulletY = pipY + CANVAS_Y/2;
+        bulletX = CANVAS_X*2;
+        shot = true;
+    }
+    if(isShooting && shot) {
+        bulletX += bulletSpeed
+    }
+    if (bulletX > CANVAS_X*10) {
+        shot = false;
+        isShooting = false;
+        bulletY = -1000;
+        bulletX = -1000;
+    }
+}
+
+const gotShot = (item, index, array) => {
+    const itemY = item.positionY; 
+    const itemX = item.positionX;
+    const value = item.value;
+    const width = item.width;
+    const name = item.name;
+    const height = item.height;
+
+    if(itemX  < bulletX
+        && bulletY - bulletH < itemY + height
+        && bulletY + bulletH > itemY - height) {
+            console.log('Aaaaaaaah')
+            array.splice(index,1)
+            shot = false;
+            isShooting = false;
+            bulletY = -1000;
+            bulletX = -1000;
+        }
 }
 
 /*/--- End ---/*/
@@ -395,17 +441,18 @@ let countMov = 0;
 
 const animate = () => {
     bgctx.clearRect(0, 0, bgX, bgY)
-    ctx.clearRect(0, 0, canvasX*10, canvasY*10)
+    ctx.clearRect(0, 0, CANVAS_X*10, CANVAS_Y*10)
     drawBG()
     drawPip()
-    
+    bulletShoot()
+
     for (let array in objArr) {
-        objArr[array].forEach(item => {
+        objArr[array].forEach((item, index) => {
             item.createObject();
             item.positionX -= speedX
             item.positionY += fishMvY
             countMov += fishMvY
-            
+            gotShot(item, index, objArr[array])
             if(countMov < -750) {
                 fishMvY = 3
             } else if (countMov > 750) {
@@ -420,12 +467,12 @@ const animate = () => {
 
     if(humanObj.array5000.length >= 1 || humanObj.array1000.length >= 1) {
         for(let array in humanObj) {
-            humanObj[array].forEach(item => {
+            humanObj[array].forEach((item,index) => {
                 item.createObject();
                 item.positionX -= 30
                 item.positionY += fishMvY
                 countMov += fishMvY
-                
+                gotShot(item, index, objArr[array])
                 if(countMov < -750) {
                     fishMvY = 2
                 } else if (countMov > 750) {
@@ -452,15 +499,15 @@ const animate = () => {
             drawFish(countForPush)
         } else if (countForPush % 35 === 0) {
             drawFish(countForPush)
-        } else if (countForPush % 310 === 0) {
+        } else if (countForPush % 1200 === 0) {
             drawFish(countForPush)
-        } else if (countForPush % 470 === 0) {
+        } else if (countForPush % 670 === 0) {
             drawFish(countForPush)
         } else if (countForPush % 240 === 0) {
             drawFish(countForPush)
         } else if (countForPush % 165 === 0) {
             drawFish(countForPush)
-        } else if (countForPush % 85 === 0) {
+        } else if (countForPush % 385 === 0) {
             drawFish(countForPush)
         } else if (countForPush % 140 === 0) {
             drawFish(countForPush)
@@ -487,25 +534,33 @@ window.onload = () => {
     setCanvasSize()
     animate()
     drawFish(100)
+    pushToArray()
+    
 
     window.addEventListener("resize",setCanvasSize,false);
 
     document.addEventListener('keydown', event => {
     
         if (event.key === "ArrowUp") {
-          // move paddle to the left
-          isMovingUP = true
+            // move paddle to the left
+            isMovingUP = true
         }
         if (event.key === "ArrowDown") {
-          // move paddle to the right
-          isMovingDown = true
+            // move paddle to the right
+            isMovingDown = true
+        }
+        if(event.key === " ") {
+            // shoot 
+            isShooting = true;
+            
         }
     })
 
     document.addEventListener('keyup', () => {
         // Stop moving the paddle
         isMovingUP = false
-        isMovingDown = false    
+        isMovingDown = false 
+        //isShooting = false  
     })
     
 }
