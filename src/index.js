@@ -1,3 +1,6 @@
+/*/--- Image Src ---/*/
+/*/--- Image Src ---/*/
+
 const srcObj = {
     50: [
         '../images/50/crab.png',
@@ -148,6 +151,9 @@ const createNew = (srcObj) => {
 }
 
 const imageArr = createNew(srcObj);
+console.log(imageArr)
+
+/*/--- End ---/*/
 
 /*/--- Background Image ---/*/
 /*/--- Background Image ---/*/
@@ -206,7 +212,7 @@ let score = 0;
 /*/--- PIP ---/*/
 const pip = new Image();
 const pipX = canvasX/2;
-let pipY = canvasY;
+let pipY = canvasY*4;
 let pipSpeed = 100;
 pip.src = '../images/scuba.png';
 
@@ -226,7 +232,20 @@ const drawPip = () => {
 /*/--- AQUA LIFE ---/*/
 /*/--- AQUA LIFE ---/*/
 
+let fishY = canvasY;
+let fishX = canvasX*10;
 
+const drawFish = () => {
+
+    let src = imageArr[0][0].src;
+    const fish = new Image();
+    fish.src = src;
+
+    ctx.drawImage(fish, fishX, fishY, canvasX*2, canvasY*2)
+    
+    fishX -= 50
+         
+}
 
 /*/--- End ---/*/
 
@@ -237,13 +256,16 @@ const animate = () => {
     ctx.clearRect(0, 0, canvasX*10, canvasY*10)
     drawBG()
     drawPip()
+    drawFish()
 
     if(!gameOver) {
         animateGameID = requestAnimationFrame(animate)
     } else { 
         cancelAnimationFrame(animateGameId);
     }
-
+    
+    if (animateGameID % 100 === 0) {
+    }
 }
 
 /*/--- End ---/*/
