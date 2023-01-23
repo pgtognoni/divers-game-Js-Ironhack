@@ -45,6 +45,12 @@ body {
     margin-top: 2rem;
 }
 
+#start-button:hover {
+    /* transform: scale(1.05); */
+    transform: scale(1.1);
+    transition: transform .5s ease-in-out ;
+}
+
 /* \\\ LANDING PAGE //// */
 /* \\\ LANDING PAGE //// */
 /* \\\ LANDING PAGE //// */
@@ -65,7 +71,7 @@ body {
 .intro-container {
     margin-left: 6rem;
     width: 33rem;
-    margin-top: -5rem;
+    margin-top: -1.5rem;
 }
 
 .text-bg {
@@ -113,6 +119,18 @@ body {
     margin: 0;
 }
 
+.space-bar {
+    text-transform: uppercase;
+    font-size: .9rem;
+    background-color: #fff;
+    padding: .2rem .5rem;
+    margin-right: .3rem;
+    color:#277bf1;
+    border-radius: .2rem;
+    vertical-align: .2rem;
+    font-weight: 600;
+}
+
 /* \\\ END LANDING PAGE //// */
 /* \\\ END LANDING PAGE //// */
 /* \\\ END LANDING PAGE //// */
@@ -123,6 +141,7 @@ body {
 
 #game-board {
     position: relative;
+    display: none;
 }
 
 #canvas-bg {
@@ -196,7 +215,7 @@ body {
 /* \\\ GAME OVER //// */
 /* \\\ GAME OVER //// */
 .game-over-bg {
-    display: none;
+    display: block;
     background: linear-gradient(45deg, rgb(64, 134, 226), rgb(113, 170, 232), rgb(102, 211, 238));
     background-size: 300% 300%;
     animation: animateTitle 10s ease infinite;
