@@ -30,11 +30,13 @@ const srcObj = {
         '../images/500/turtle2.png',
     ],
     1000: [
-        '../images/500/shark3.png',
-        '../images/500/shark4.png',
         '../images/1000/submarine/submarine1.png',
         '../images/1000/submarine/submarine2.png',
         '../images/1000/diverHarpoon.png',
+    ],
+    2000: [
+        '../images/500/shark3.png',
+        '../images/500/shark4.png',
     ],
     5000: [
         '../images/5000/aquaman.png',
@@ -46,6 +48,7 @@ const srcObj = {
         '../images/buttons/G300.png',
         '../images/buttons/G500.png',
         '../images/buttons/G1000.png',
+        '../images/buttons/G2000.png',
         '../images/buttons/G5000.png',
         '../images/buttons/R50.png',
         '../images/buttons/R75.png',
@@ -53,6 +56,7 @@ const srcObj = {
         '../images/buttons/R300.png',
         '../images/buttons/R500.png',
         '../images/buttons/R1000.png',
+        '../images/buttons/R2000.png',
         '../images/buttons/R5000.png',
     ],
     garbage: [
@@ -76,7 +80,7 @@ const createNew = (srcObj) => {
     const garbageArr = [];
     
     for(let value in srcObj) {
-        if(value == 50 || value == 75 || value == 100 || value == 300 || value == 500) {
+        if(value == 50 || value == 75 || value == 100 || value == 300 || value == 500 || value == 2000) {
             srcObj[value].forEach(src => {
                 const val =  {
                     family: 'life',
@@ -251,6 +255,8 @@ const objArr = {
     array100: [],
     array300: [],
     array500: [],
+    array1000: [],
+    array2000: [],
     garbageArr: [],
 }
 const humanObj = {
@@ -261,20 +267,6 @@ const humanObj = {
 const scoreArr= [];
 const bulletArr = [];
 
-const pushToArray = () => {
-    imageArr.forEach(array => {
-        array.forEach(item => {
-            switch(item.family) {
-                case 'scores':
-                    return scoreArr.push(item);
-                case 'bullets':
-                    return bulletsArr.push(item);
-                case 'explosion':
-                    return explosionArr.push(item);      
-            }
-        })
-    })
-}
 
 class Objstacle {
     constructor(positionX, positionY, width, height, src, family, value) {
@@ -352,6 +344,13 @@ const drawFish = (count) => {
         const height = CANVAS_Y*5;
         const newObstacle = createHuman(arr, width, height)
         humanObj.array1000.push(newObstacle)
+    } else if (count % 630 == 0) {
+        const arr = imageArr[0].filter(item => item.value == 2000)
+        console.log(arr)
+        const width = CANVAS_X*5;
+        const height = CANVAS_Y*5;
+        const newObstacle = createElement(arr, width, height)
+        objArr.array2000.push(newObstacle)
     } else if (count % 240 == 0) {
         const arr = imageArr[0].filter(item => item.value == 75)
         const width = CANVAS_X;
@@ -571,6 +570,8 @@ const animate = () => {
         } else if (countForPush % 385 === 0) {
             drawFish(countForPush)
         } else if (countForPush % 140 === 0) {
+            drawFish(countForPush)
+        } else if (countForPush % 630 === 0) {
             drawFish(countForPush)
         }
     }
