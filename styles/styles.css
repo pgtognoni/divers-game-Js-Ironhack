@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
 
 /* \\\ GLOBAL CLASSES  //// */
 
@@ -24,7 +25,7 @@ body {
 }
 
 .pip {
-    font-family: 'Lilita One', cursive;
+    font-family: 'Lilita One', 'cursive';
     font-size: 1.8rem;
     letter-spacing: 1.5px;
 }
@@ -137,6 +138,54 @@ body {
     z-index: 1;
     width: 100vw !important;
     height: 100vh !important;
+}
+
+/* \\ Score Display // */
+
+.score-container {
+    position: absolute;
+    background: linear-gradient( rgb(255, 255, 0), rgb(242, 255, 0), rgb(248, 252, 9));
+    width: max-content;
+    right: 1rem;
+    top: 0.8rem;
+    border-radius: 1rem;
+    box-shadow: inset 2px 2px 4px #f88e2b, inset -2px -2px 4px #f88e2b;
+}
+
+.score-display {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    font-family: 'Lilita One', 'cursive';
+    padding: .6rem .8rem;
+    margin: .6rem;
+    border-radius: .8rem;
+    background: linear-gradient( rgb(244, 228, 5), rgb(242, 255, 0), rgb(242, 255, 0), rgb(240, 244, 14));
+    box-shadow: 2px 2px 4px #f88e2b, -2px -2px 4px #f88e2b;
+    box-shadow: inset 2px 2px 4px #f88e2b, inset -2px -2px 4px #f88e2b;
+}
+
+.score-display h1 {
+    background: linear-gradient(0deg, #42b603, #1bac91, #5cca02);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+    padding: 0;
+    margin: 0;
+}
+
+#score {
+    background: linear-gradient(0deg, #277bf1, #64bb32, #1bbce9);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+    font-size: 2rem;
+    padding: 0;
+    margin: 0;
 }
 
 /* \\\ END GAME BOARD //// */

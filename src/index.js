@@ -1,6 +1,5 @@
 /*/--- Image Src ---/*/
 /*/--- Image Src ---/*/
-//import { imageArr, srcObj } from "./imagesGen.js";
 const srcObj = {
     50: [
         '../images/50/crab.png',
@@ -21,7 +20,6 @@ const srcObj = {
     300: [
         '../images/300/girl1.png',
         '../images/300/jelly1.png',
-        '../images/5000/mine.png'
     ],
     500: [
         '../images/500/seaHorse1.png',
@@ -67,6 +65,7 @@ const srcObj = {
         '../images/300/plasticbag2.png',
         '../images/500/plasticbottle.png',
         '../images/500/plasticbottle1.png',
+        '../images/5000/mine.png'
     ]
 }
 
@@ -144,7 +143,7 @@ const createNew = (srcObj) => {
                 const garbage =  {
                     family: 'garbage',
                     src: src,
-                    value: 100
+                    value: 300
                 }
                 garbageArr.push(garbage)
             });
@@ -217,7 +216,18 @@ let isMovingDown = false
 let gameOver = false;
 let GameScore = 0;
 let positionY = 0;
-let speedX = 20;
+let speedX = 25;
+
+/* variables for recursive images */
+let recursive1 = 57;
+let recursive2 = 47;
+let recursive3 = 770;
+let recursive4 = 570;
+let recursive5 = 240;
+let recursive6 = 365;
+let recursive7 = 185;
+let recursive8 = 407;
+let recursive9 = 330;
 
 /*/--- End ---/*/
 
@@ -225,6 +235,8 @@ let speedX = 20;
 /*/--- PIP ---/*/
 const pip = new Image();
 const pipX = CANVAS_X/2;
+const pipWidth = CANVAS_X*2;
+const pipHeight = CANVAS_Y*2;
 let pipY = CANVAS_Y*4;
 let pipSpeed = 100;
 pip.src = '../images/scuba.png';
@@ -234,7 +246,7 @@ coral.src = '../images/coral.png'
 
 const drawPip = () => {
 
-    ctx.drawImage(pip, pipX, pipY, CANVAS_X*2, CANVAS_Y*2)
+    ctx.drawImage(pip, pipX, pipY, pipWidth, pipHeight)
     ctx.drawImage(coral, CANVAS_X/0.35, CANVAS_Y*6.2, CANVAS_X*4, CANVAS_Y*4)
    
     if (isMovingUP && pipY > minY) {
@@ -320,56 +332,56 @@ const drawFish = (count) => {
 
     positionY = Math.floor(Math.random() * (maxY - minY + 1) + minY);
     
-    if (count % 100 == 0) {
+    if (count % recursive1 == 0) {
         const arr = imageArr[0].filter(item => item.value == 50)
         const width = CANVAS_X;
         const height = CANVAS_Y*1.5;
         const newObstacle = createElement(arr, width, height)
         objArr.array50.push(newObstacle)
-    } else if (count % 35 == 0) {
+    } else if (count % recursive2 == 0) {
         const arr = imageArr[5]
-        const width = CANVAS_X;
-        const height = CANVAS_Y*1.2;
+        const width = CANVAS_X*1.1;
+        const height = CANVAS_Y*1.5;
         const newObstacle = createElement(arr, width, height)
         objArr.garbageArr.push(newObstacle)
-    } else if (count % 1200 == 0) {
+    } else if (count % recursive3 == 0) {
         const arr = imageArr[1].filter(item => item.value == 5000)
         const width = CANVAS_X*4;
         const height = CANVAS_Y*4;
         const newObstacle = createHuman(arr, width, height)
         humanObj.array5000.push(newObstacle)
-    } else if (count % 670 == 0) {
+    } else if (count % recursive4 == 0) {
         const arr = imageArr[1].filter(item => item.value == 1000)
-        const width = CANVAS_X*5;
-        const height = CANVAS_Y*5;
+        const width = CANVAS_X*4;
+        const height = CANVAS_Y*4;
         const newObstacle = createHuman(arr, width, height)
         humanObj.array1000.push(newObstacle)
-    } else if (count % 630 == 0) {
+    } else if (count % recursive5 == 0) {
         const arr = imageArr[0].filter(item => item.value == 2000)
         console.log(arr)
-        const width = CANVAS_X*5;
-        const height = CANVAS_Y*5;
+        const width = CANVAS_X*4;
+        const height = CANVAS_Y*4;
         const newObstacle = createElement(arr, width, height)
         objArr.array2000.push(newObstacle)
-    } else if (count % 240 == 0) {
+    } else if (count % recursive6 == 0) {
         const arr = imageArr[0].filter(item => item.value == 75)
         const width = CANVAS_X;
         const height = CANVAS_Y*1.2;
         const newObstacle = createElement(arr, width, height)
         objArr.array75.push(newObstacle)
-    } else if (count % 165 == 0) {
+    } else if (count % recursive7 == 0) {
         const arr = imageArr[0].filter(item => item.value == 100)
         const width = CANVAS_X*1.7;
         const height = CANVAS_Y*1.8;
         const newObstacle = createElement(arr, width, height)
         objArr.array100.push(newObstacle)
-    } else if (count % 385 == 0) {
+    } else if (count % recursive8 == 0) {
         const arr = imageArr[0].filter(item => item.value == 300)
         const width = CANVAS_X*1.4;
         const height = CANVAS_Y*2;
         const newObstacle = createElement(arr, width, height)
         objArr.array300.push(newObstacle)
-    } else if (count % 140 == 0) {
+    } else if (count % recursive9 == 0) {
         const arr = imageArr[0].filter(item => item.value == 500)
         const width = CANVAS_X*1.5;
         const height = CANVAS_Y*1.7;
@@ -411,7 +423,7 @@ const drawBullet = () => {
 const bulletShoot = () => {
     if(isShooting && !shot) {
         bulletY = pipY + CANVAS_Y/2;
-        bulletX = CANVAS_X*2;
+        bulletX = CANVAS_X*2.3;
         shot = true;
         const newBullet = new Objstacle(bulletX, bulletY, bulletW, bulletH, bulletscr, 'bullet', 0);
         bulletArr.push(newBullet)
@@ -427,8 +439,8 @@ const gotShot = (item, index, array) => {
     const height = item.height;
 
     if(itemX  < bulletX
-        && bulletY  < itemY + height-100
-        && bulletY  > itemY - height+100) {
+        && bulletY - bulletH/2 < itemY + height/2
+        && bulletY  > itemY - height/2) {
             array.splice(index,1)
             shot = false;
             isShooting = false;
@@ -451,7 +463,16 @@ const displayScore = (name, value, itemY, itemX) => {
     const score = imageArr[2];
     let newScore;
     scoreX = itemX
-    if(name != 'humans') {
+    if (name == 'humans' || name == 'garbage') {
+        GameScore += value
+        score.map(item => {
+            if(item['value'] === value && item['action'] === 'sum') {
+            newScore = item
+            }
+        }) 
+        const element = new Objstacle(itemX, itemY, CANVAS_X/1.2, CANVAS_Y/1.2, newScore.src, newScore.family, newScore.value)
+        scoreArr.push(element) 
+    } else {
         GameScore -= value
         score.map(item => {
             if(item['value'] === value && item['action'] === 'substract') {
@@ -460,16 +481,7 @@ const displayScore = (name, value, itemY, itemX) => {
         }) 
         const element = new Objstacle(itemX, itemY, CANVAS_X/1.2, CANVAS_Y/1.2, newScore.src, newScore.family, newScore.value)
         scoreArr.push(element) 
-    } else if (name == 'humans') {
-        GameScore -= value
-        score.map(item => {
-            if(item['value'] === value && item['action'] === 'sum') {
-            newScore = item
-            }
-        }) 
-        const element = new Objstacle(itemX, itemY, CANVAS_X/1.2, CANVAS_Y/1.2, newScore.src, newScore.family, newScore.value)
-        scoreArr.push(element) 
-    }
+    }  
 }
 
 const drawScore = (posX) => {
@@ -484,6 +496,33 @@ const drawScore = (posX) => {
 
 /*/--- End ---/*/
 
+/*/--- COLLISION ---/*/
+/*/--- COLLISION ---/*/
+pipX
+pipY
+pipHeight
+pipWidth
+
+const pipCollided = (item, index, array) => {
+    const itemY = item.positionY; 
+    const itemX = item.positionX;
+    const width = item.width;
+    const height = item.height;
+    const value = item.value;
+    const group = item.name;
+
+    if(itemX + width/2 < pipX + pipWidth
+        && pipY - pipHeight/3.5  < itemY + height/2
+        && pipY + pipHeight/3  > itemY - height/2) {
+            array.splice(index,1)
+        if(group == 'garbage') {
+            GameScore += value;
+        } else GameScore -= value;
+        console.log(GameScore)
+    }
+}
+/*/--- End ---/*/
+
 /*/--- Animate ---/*/
 let countForPush = 0; 
 let fishMvY = -10;
@@ -492,6 +531,7 @@ let countMov = 0;
 const animate = () => {
     bgctx.clearRect(0, 0, bgX, bgY)
     ctx.clearRect(0, 0, CANVAS_X*10, CANVAS_Y*10)
+    document.getElementById('score').innerHTML = GameScore
     drawBG()
     drawPip()
     if (isShooting){
@@ -513,6 +553,7 @@ const animate = () => {
             item.positionY += fishMvY
             countMov += fishMvY
             gotShot(item, index, objArr[array])
+            pipCollided(item, index, objArr[array])
             if(countMov < -750) {
                 fishMvY = 3
             } else if (countMov > 750) {
@@ -533,6 +574,7 @@ const animate = () => {
                 item.positionY += fishMvY
                 countMov += fishMvY
                 gotShot(item, index, humanObj[array])
+                pipCollided(item, index, humanObj[array])
                 if(countMov < -750) {
                     fishMvY = 2
                 } else if (countMov > 750) {
@@ -555,29 +597,30 @@ const animate = () => {
 
     if (animateGameID % 10 === 0) {
         countForPush +=  1
-        if(countForPush % 100 === 0) {
+        if(countForPush % recursive1 === 0) {
             drawFish(countForPush)
-        } else if (countForPush % 35 === 0) {
+        } else if (countForPush % recursive2 === 0) {
             drawFish(countForPush)
-        } else if (countForPush % 1200 === 0) {
+        } else if (countForPush % recursive3 === 0) {
             drawFish(countForPush)
-        } else if (countForPush % 670 === 0) {
+        } else if (countForPush % recursive4 === 0) {
             drawFish(countForPush)
-        } else if (countForPush % 240 === 0) {
+        } else if (countForPush % recursive5 === 0) {
             drawFish(countForPush)
-        } else if (countForPush % 165 === 0) {
+        } else if (countForPush % recursive6 === 0) {
             drawFish(countForPush)
-        } else if (countForPush % 385 === 0) {
+        } else if (countForPush % recursive7 === 0) {
             drawFish(countForPush)
-        } else if (countForPush % 140 === 0) {
+        } else if (countForPush % recursive8 === 0) {
             drawFish(countForPush)
-        } else if (countForPush % 630 === 0) {
+        } else if (countForPush % recursive9 === 0) {
             drawFish(countForPush)
         }
     }
 }
 
 /*/--- End ---/*/
+
 
 function setCanvasSize(){
 
