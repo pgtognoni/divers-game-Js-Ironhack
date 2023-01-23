@@ -1,7 +1,8 @@
-const srcObj = {
+export const srcObj = {
     50: [
         '../images/50/crab.png',
         '../images/100/erizo.png',
+        '../images/1000/seaHorse.png',
     ],
     75: [
         '../images/75/goldenfish.png',
@@ -17,30 +18,23 @@ const srcObj = {
     300: [
         '../images/300/girl1.png',
         '../images/300/jelly1.png',
-        '../images/300/jelly2.png',
+        '../images/5000/mine.png'
     ],
     500: [
         '../images/500/seaHorse1.png',
-        '../images/500/shark.png',
-        '../images/500/shark3.png',
-        '../images/500/shark4.png',
         '../images/500/turtle1.png',
         '../images/1000/octopus.png',
-        '../images/1000/seaHorse.png',
         '../images/500/turtle2.png',
     ],
     1000: [
+        '../images/500/shark3.png',
+        '../images/500/shark4.png',
         '../images/1000/submarine/submarine1.png',
         '../images/1000/submarine/submarine2.png',
         '../images/1000/diverHarpoon.png',
     ],
     5000: [
         '../images/5000/aquaman.png',
-        '../images/5000/mine.png'
-    ],
-    bullets: [
-        '../images/bullets/shell.png',
-        '../images/bullets/star.png',
     ],
     scores: [
         '../images/buttons/G50.png',
@@ -57,9 +51,6 @@ const srcObj = {
         '../images/buttons/R500.png',
         '../images/buttons/R1000.png',
         '../images/buttons/R5000.png',
-    ],
-    explosion: [
-        '../images/explosion.png',
     ],
     garbage: [
         '../images/100/camera.png',
@@ -92,7 +83,6 @@ const createNew = (srcObj) => {
                 lifeArr.push(val)
             });
         } else if(value == 5000 || value == 1000) {
-            //console.log(srcObj[value])
             srcObj[value].forEach(src => {
                 const val =  {
                     family: 'humans',
@@ -113,8 +103,6 @@ const createNew = (srcObj) => {
         } else if(value == 'scores') {
             
             srcObj[value].forEach(src => {
-                let value = 0;
-                let green = ""
                 if (src.match(/G/g)) {
                     let num = src.split('G').filter(item => item.match(/.png/)).map(item => item.replace(".png", "")).toString()
                     const score =  {
@@ -160,49 +148,4 @@ const createNew = (srcObj) => {
     return  [lifeArr, humansArr, scoresArr, bulletsArr, explosionArr, garbageArr]
 }
 
-const imageArr = createNew(srcObj);
-
-//console.log(imageArr)
-
-
-// garbage: [
-//     '../images/garbage/camera.png',
-//     '../images/garbage/cocan.png',
-//     '../images/garbage/plasticbag.png',
-//     '../images/garbage/cocan.png',
-//     '../images/garbage/plasticbag2.png',
-//     '../images/garbage/plasticbottle.png',
-//     '../images/garbage/plasticbottle1.png',
-// ],
-
-else if (count % 50 == 0) {
-        const arr = imageArr[5]
-        const width = canvasX;
-        const height = canvasY*1.2;
-        const newObstacle = createElement(arr, width, height)
-        objArr.garbageArr.push(newObstacle)
-    } else if (count % 50 == 0) {
-        const arr = imageArr[5]
-        const width = canvasX;
-        const height = canvasY*1.2;
-        const newObstacle = createElement(arr, width, height)
-        objArr.garbageArr.push(newObstacle)
-    } else if (count % 50 == 0) {
-        const arr = imageArr[5]
-        const width = canvasX;
-        const height = canvasY*1.2;
-        const newObstacle = createElement(arr, width, height)
-        objArr.garbageArr.push(newObstacle)
-    } else if (count % 50 == 0) {
-        const arr = imageArr[5]
-        const width = canvasX;
-        const height = canvasY*1.2;
-        const newObstacle = createElement(arr, width, height)
-        objArr.garbageArr.push(newObstacle)
-    } else if (count % 50 == 0) {
-        const arr = imageArr[5]
-        const width = canvasX;
-        const height = canvasY*1.2;
-        const newObstacle = createElement(arr, width, height)
-        objArr.garbageArr.push(newObstacle)
-    }
+export const imageArr = createNew(srcObj);

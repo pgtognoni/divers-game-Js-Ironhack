@@ -1,6 +1,6 @@
 /*/--- Image Src ---/*/
 /*/--- Image Src ---/*/
-
+//import { imageArr, srcObj } from "./imagesGen.js";
 const srcObj = {
     50: [
         '../images/50/crab.png',
@@ -207,12 +207,13 @@ ctx.scale(.1,.1)
 /*/--- Global Variables ---/*/
 const minY = CANVAS_Y/2;
 const maxY = CANVAS_Y*10 - CANVAS_Y*10/4.5
+const positionX = CANVAS_X*10
 let isMovingUP = false
 let isMovingDown = false
 let gameOver = false;
-let score = 0;
+let GameScore = 0;
 let positionY = 0;
-let speedX = 30;
+let speedX = 20;
 
 /*/--- End ---/*/
 
@@ -227,19 +228,10 @@ pip.src = '../images/scuba.png';
 const coral = new Image();
 coral.src = '../images/coral.png'
 
-const bullet = new Image();
-bullet.src = '../images/bullets/star.png'
-let bulletX = -1000;
-let bulletY = -1000;
-const bulletW = CANVAS_X *0.8;
-const bulletH = CANVAS_Y;
-
 const drawPip = () => {
 
     ctx.drawImage(pip, pipX, pipY, CANVAS_X*2, CANVAS_Y*2)
     ctx.drawImage(coral, CANVAS_X/0.35, CANVAS_Y*6.2, CANVAS_X*4, CANVAS_Y*4)
-    ctx.drawImage(bullet, bulletX, bulletY, bulletW, bulletH)
-    //console.log(bulletX)
    
     if (isMovingUP && pipY > minY) {
         pipY -= pipSpeed
@@ -267,6 +259,7 @@ const humanObj = {
 }
 
 const scoreArr= [];
+const bulletArr = [];
 
 const pushToArray = () => {
     imageArr.forEach(array => {
@@ -284,8 +277,8 @@ const pushToArray = () => {
 }
 
 class Objstacle {
-    constructor(positionY, width, height, src, family, value) {
-        this.positionX = CANVAS_X*10;
+    constructor(positionX, positionY, width, height, src, family, value) {
+        this.positionX = positionX;
         this.positionY = positionY;
         this.width = width;
         this.height = height;
@@ -311,7 +304,7 @@ const createElement = (array, width, height) => {
     const value = array[index].value;
     const family = array[index].family;
     const posY = positionY
-    const newObstacle = new Objstacle(posY, width, height, src, family, value);
+    const newObstacle = new Objstacle(positionX, posY, width, height, src, family, value);
 
     return newObstacle;
 }
@@ -326,7 +319,7 @@ const createHuman = (array, width, height) => {
     const value = array[index].value;
     const family = array[index].family;
     const posY = humanY
-    const newObstacle = new Objstacle(posY, width, height, src, family, value);
+    const newObstacle = new Objstacle(positionX, posY, width, height, src, family, value);
 
     return newObstacle;
 }
@@ -338,7 +331,7 @@ const drawFish = (count) => {
     if (count % 100 == 0) {
         const arr = imageArr[0].filter(item => item.value == 50)
         const width = CANVAS_X;
-        const height = CANVAS_Y*1.3;
+        const height = CANVAS_Y*1.5;
         const newObstacle = createElement(arr, width, height)
         objArr.array50.push(newObstacle)
     } else if (count % 35 == 0) {
@@ -353,7 +346,6 @@ const drawFish = (count) => {
         const height = CANVAS_Y*4;
         const newObstacle = createHuman(arr, width, height)
         humanObj.array5000.push(newObstacle)
-        console.log(humanObj)
     } else if (count % 670 == 0) {
         const arr = imageArr[1].filter(item => item.value == 1000)
         const width = CANVAS_X*5;
@@ -391,24 +383,39 @@ const drawFish = (count) => {
 
 /*/--- BULLETS ---/*/
 /*/--- BULLETS ---/*/
+
+const bulletscr = '../images/bullets/star.png'
+const bulletW = CANVAS_X *0.8;
+const bulletH = CANVAS_Y;
+let bulletX = undefined;
+let bulletY = undefined;
 let bulletSpeed = 300;
 let isShooting = false;
 let shot = false;
 
+const drawBullet = () => {
+    bulletArr.forEach((item, index) => {
+        item.createObject();
+        item.positionX += bulletSpeed
+        bulletX = item.positionX;
+        bulletY = item.positionY;
+        if(item.positionX > CANVAS_X*10) {
+            shot = false;
+            isShooting = false;
+            bulletY = undefined;
+            bulletX = undefined;
+            bulletArr.shift()
+        }
+    })
+}
+
 const bulletShoot = () => {
-    if(isShooting === true && shot == false) {
+    if(isShooting && !shot) {
         bulletY = pipY + CANVAS_Y/2;
         bulletX = CANVAS_X*2;
         shot = true;
-    }
-    if(isShooting && shot) {
-        bulletX += bulletSpeed
-    }
-    if (bulletX > CANVAS_X*10) {
-        shot = false;
-        isShooting = false;
-        bulletY = -1000;
-        bulletX = -1000;
+        const newBullet = new Objstacle(bulletX, bulletY, bulletW, bulletH, bulletscr, 'bullet', 0);
+        bulletArr.push(newBullet)
     }
 }
 
@@ -421,15 +428,59 @@ const gotShot = (item, index, array) => {
     const height = item.height;
 
     if(itemX  < bulletX
-        && bulletY - bulletH < itemY + height
-        && bulletY + bulletH > itemY - height) {
-            console.log('Aaaaaaaah')
+        && bulletY  < itemY + height-100
+        && bulletY  > itemY - height+100) {
             array.splice(index,1)
             shot = false;
             isShooting = false;
-            bulletY = -1000;
-            bulletX = -1000;
+            bulletY = undefined;
+            bulletX = undefined;
+            bulletArr.splice(0,1)
+            displayScore(name, value, itemY, itemX);
+    }
+}
+
+/*/--- End ---/*/
+
+/*/--- SCORES ---/*/
+/*/--- SCORES ---/*/
+
+let scoreX = undefined;
+const scoreSpeed = 100
+
+const displayScore = (name, value, itemY, itemX) => {
+    const score = imageArr[2];
+    let newScore;
+    scoreX = itemX
+    if(name != 'humans') {
+        GameScore -= value
+        score.map(item => {
+            if(item['value'] === value && item['action'] === 'substract') {
+            newScore = item
+            }
+        }) 
+        const element = new Objstacle(itemX, itemY, CANVAS_X/1.2, CANVAS_Y/1.2, newScore.src, newScore.family, newScore.value)
+        scoreArr.push(element) 
+    } else if (name == 'humans') {
+        GameScore -= value
+        score.map(item => {
+            if(item['value'] === value && item['action'] === 'sum') {
+            newScore = item
+            }
+        }) 
+        const element = new Objstacle(itemX, itemY, CANVAS_X/1.2, CANVAS_Y/1.2, newScore.src, newScore.family, newScore.value)
+        scoreArr.push(element) 
+    }
+}
+
+const drawScore = (posX) => {
+    scoreArr.forEach((item, index) => {
+        item.createObject();
+        item.positionY -= scoreSpeed;
+        if(item.positionY < 0) {
+            scoreArr.shift()
         }
+    })
 }
 
 /*/--- End ---/*/
@@ -444,7 +495,17 @@ const animate = () => {
     ctx.clearRect(0, 0, CANVAS_X*10, CANVAS_Y*10)
     drawBG()
     drawPip()
-    bulletShoot()
+    if (isShooting){
+        bulletShoot()
+    }
+    if(scoreArr[0]){
+        drawScore()
+    }
+    if(bulletArr[0]){
+        drawBullet()
+    }
+
+   
 
     for (let array in objArr) {
         objArr[array].forEach((item, index) => {
@@ -472,7 +533,7 @@ const animate = () => {
                 item.positionX -= 30
                 item.positionY += fishMvY
                 countMov += fishMvY
-                gotShot(item, index, objArr[array])
+                gotShot(item, index, humanObj[array])
                 if(countMov < -750) {
                     fishMvY = 2
                 } else if (countMov > 750) {
@@ -524,9 +585,6 @@ function setCanvasSize(){
 
     document.getElementById('canvas-bg').style.height = height + "px";
     document.getElementById('canvas-bg').style.width = width + "px";
-
-    console.log(document.getElementById('canvas-bg').style.height,
-    document.getElementById('canvas-bg').style.width);
 }
 
 window.onload = () => {
@@ -534,7 +592,6 @@ window.onload = () => {
     setCanvasSize()
     animate()
     drawFish(100)
-    pushToArray()
     
 
     window.addEventListener("resize",setCanvasSize,false);
@@ -560,7 +617,6 @@ window.onload = () => {
         // Stop moving the paddle
         isMovingUP = false
         isMovingDown = false 
-        //isShooting = false  
     })
     
 }
