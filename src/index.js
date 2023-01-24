@@ -631,6 +631,18 @@ function setCanvasSize(){
     document.getElementById('canvas-bg').style.width = width + "px";
 }
 
+document.querySelector('#start-button').addEventListener('click', () => {
+    const startBg = document.querySelector('.moving-bg');
+    startBg.classList.add('start-fade');
+    setTimeout(() => {
+        startBg.style.display = 'none'
+        clearTimeout()
+    }, 1500)
+    //if (startBg.classList.contains('start-fade')) startBg.style.display = 'none'
+    const gameCanvas = document.getElementById('game-board');
+    gameCanvas.style.display='block';
+})
+
 window.onload = () => {
 
     setCanvasSize()
