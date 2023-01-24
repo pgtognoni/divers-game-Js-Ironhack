@@ -20,6 +20,7 @@ const srcObj = {
     300: [
         '../images/300/girl1.png',
         '../images/300/jelly1.png',
+        '../images/300/jelly2.png',
     ],
     500: [
         '../images/500/seaHorse1.png',
@@ -36,6 +37,9 @@ const srcObj = {
         '../images/500/shark3.png',
         '../images/500/shark4.png',
     ],
+    2500: [
+        '../images/5000/mine.png',
+    ],
     5000: [
         '../images/5000/aquaman.png',
     ],
@@ -47,6 +51,7 @@ const srcObj = {
         '../images/buttons/G500.png',
         '../images/buttons/G1000.png',
         '../images/buttons/G2000.png',
+        '../images/buttons/G2500.png',
         '../images/buttons/G5000.png',
         '../images/buttons/R50.png',
         '../images/buttons/R75.png',
@@ -65,7 +70,6 @@ const srcObj = {
         '../images/300/plasticbag2.png',
         '../images/500/plasticbottle.png',
         '../images/500/plasticbottle1.png',
-        '../images/5000/mine.png'
     ]
 }
 
@@ -88,7 +92,7 @@ const createNew = (srcObj) => {
                 }
                 lifeArr.push(val)
             });
-        } else if(value == 5000 || value == 1000) {
+        } else if(value == 5000 || value == 1000 || value == 2500) {
             srcObj[value].forEach(src => {
                 const val =  {
                     family: 'humans',
@@ -216,18 +220,18 @@ let isMovingDown = false
 let gameOver = false;
 let gameScore = 0;
 let positionY = 0;
-let speedX = 25;
+let speedX = 35;
 
 /* variables for recursive images */
-let recursive1 = 57;
+let recursive1 = 37;
 let recursive2 = 47;
-let recursive3 = 770;
-let recursive4 = 450;
+let recursive3 = 97;
+let recursive4 = 457;
 let recursive5 = 240;
-let recursive6 = 365;
+let recursive6 = 77;
 let recursive7 = 185;
-let recursive8 = 407;
-let recursive9 = 330;
+let recursive8 = 107;
+let recursive9 = 237;
 
 /*/--- End ---/*/
 
@@ -347,28 +351,29 @@ const drawFish = (count) => {
         //objArr.garbageArr.push(newObstacle)
         objArr.push(newObstacle)
     } else if (count % recursive3 == 0) {
-        const arr = imageArr[1].filter(item => item.value == 5000)
-        const width = CANVAS_X*4;
-        const height = CANVAS_Y*4;
+        const arr = imageArr[1].filter(item => item.value == 2500)
+        const width = CANVAS_X;
+        const height = CANVAS_Y*1.4;
         const newObstacle = createHuman(arr, width, height)
         humanObj.array5000.push(newObstacle)
         //objArr.array50.push(newObstacle)
-    } else if (count % recursive4 == 0) {
-        const arr = imageArr[1].filter(item => item.value == 1000)
+    }  else if (count % recursive4 == 0) {
+        const arr = imageArr[1].filter(item => {if (item.value == 1000 || item.value == 5000) return item })
         const width = CANVAS_X*4;
         const height = CANVAS_Y*4;
         const newObstacle = createHuman(arr, width, height)
-        console.log('submarine')
         humanObj.array1000.push(newObstacle)
+        console.log('human')
         // objArr.array50.push(newObstacle)
     } else if (count % recursive5 == 0) {
         const arr = imageArr[0].filter(item => item.value == 2000)
-        const width = CANVAS_X*4.5;
-        const height = CANVAS_Y*4;
+        const width = CANVAS_X*3.5;
+        const height = CANVAS_Y*3;
         const newObstacle = createElement(arr, width, height)
         //objArr.array2000.push(newObstacle)
         objArr.push(newObstacle)
-    } else if (count % recursive6 == 0) {
+    } 
+    else if (count % recursive6 == 0) {
         const arr = imageArr[0].filter(item => item.value == 75)
         const width = CANVAS_X;
         const height = CANVAS_Y*1.2;
@@ -507,11 +512,6 @@ const drawScore = (posX) => {
 
 /*/--- COLLISION ---/*/
 /*/--- COLLISION ---/*/
-pipX
-pipY
-pipHeight
-pipWidth
-
 const pipCollided = (item, index, array) => {
     const itemY = item.positionY; 
     const itemX = item.positionX;
@@ -521,11 +521,14 @@ const pipCollided = (item, index, array) => {
     const group = item.name;
 
     if(itemX + width/2 < pipX + pipWidth
+        && itemX + width/2 > pipX
         && pipY - pipHeight/3.5  < itemY + height/2
         && pipY + pipHeight/3  > itemY - height/2) {
             array.splice(index,1)
         if(group == 'garbage') {
             gameScore += value;
+        } else if (value === 2000 || value === 1000 || value === 5000 || value === 2500) {
+            gameOver = true;
         } else gameScore -= value;
     }
 }
@@ -617,6 +620,12 @@ const animate = () => {
         cancelAnimationFrame(animateGameID);
         bgctx.clearRect(0, 0, bgX, bgY)
         ctx.clearRect(0, 0, CANVAS_X*10, CANVAS_Y*10)
+        
+        if (gameScore < 0) {
+            gameScore = 0;
+            document.querySelector('.score .final-score').innerHTML = `${gameScore} PIP`
+        } else document.querySelector('.score .final-score').innerHTML = `${gameScore} PIP`
+
         countForPush = 0; 
         fishMvY = -10;
         countMov = 0;
@@ -639,10 +648,6 @@ const animate = () => {
         const gameOverBg = document.querySelector('.game-over-bg');
         gameOverBg.classList.remove('fade', 'hide')
         gameOverBg.classList.add('show');
-        if (gameScore < 0) {
-            gameScore = 0;
-            document.querySelector('.score .final-score').innerHTML = `${gameScore} PIP`
-        } else document.querySelector('.score .final-score').innerHTML = `${gameScore} PIP`
 
         humanObj.array1000.splice(0, humanObj.array1000.length);
         humanObj.array5000.splice(0, humanObj.array5000.length);
@@ -715,7 +720,7 @@ window.onload = () => {
         gameCanvas.classList.add('show');
         
         animate()
-        drawFish(100)
+        drawFish(recursive1)
 
         document.addEventListener('keydown', event => {
             
@@ -729,8 +734,7 @@ window.onload = () => {
             }
             if(event.key === " ") {
                 // shoot 
-                isShooting = true;
-                
+                isShooting = true; 
             }
         })
 
@@ -756,18 +760,10 @@ window.onload = () => {
 
     document.querySelector('.home-icon').addEventListener('click', () => {
         const gameOverBg = document.querySelector('.game-over-bg');
-        gameOverBg.classList.add('fade');
-        setTimeout(() => {
-            gameOverBg.classList.add('hide')
-            gameOverBg.classList.remove('show')
-            clearTimeout()
-        }, 1000)
+        gameOverBg.classList.remove('show')
+        gameOverBg.classList.add('hide')
         const startBg = document.querySelector('.moving-bg');
         startBg.classList.remove('hide', 'fade')
-        setTimeout(() => {
-            startBg.classList.add('show');
-            clearTimeout()
-        }, 1000)
-        gameOver = false;
+        startBg.classList.add('show');
     })
 }
