@@ -225,13 +225,13 @@ let speedX = 35;
 /* variables for recursive images */
 let recursive1 = 37;
 let recursive2 = 47;
-let recursive3 = 97;
-let recursive4 = 457;
-let recursive5 = 240;
-let recursive6 = 77;
-let recursive7 = 185;
-let recursive8 = 107;
-let recursive9 = 237;
+let recursive3 = 77;
+let recursive4 = 87;
+let recursive5 = 147;
+let recursive6 = 107;
+let recursive7 = 177;
+let recursive8 = 287;
+let recursive9 = 397;
 
 /*/--- End ---/*/
 
@@ -521,7 +521,28 @@ const pipCollided = (item, index, array) => {
     const group = item.name;
 
     if(itemX + width/2 < pipX + pipWidth
-        && itemX + width/2 > pipX
+        && itemX + width/2 > pipX 
+        && pipY - pipHeight/3.5  < itemY + height/2
+        && pipY + pipHeight/3  > itemY - height/2) {
+            array.splice(index,1)
+        if(group == 'garbage') {
+            gameScore += value;
+        } else if (value === 2000 || value === 1000 || value === 5000 || value === 2500) {
+            gameOver = true;
+        } else gameScore -= value;
+    }
+}
+
+const pipCollidedHuman = (item, index, array) => {
+    const itemY = item.positionY; 
+    const itemX = item.positionX;
+    const width = item.width;
+    const height = item.height;
+    const value = item.value;
+    const group = item.name;
+
+    if(itemX - width/2 < pipX 
+        && itemX + width/2 > pipX - pipWidth/2
         && pipY - pipHeight/3.5  < itemY + height/2
         && pipY + pipHeight/3  > itemY - height/2) {
             array.splice(index,1)
@@ -571,13 +592,17 @@ const animate = () => {
         gameOver = true
     }
 
-    
     objArr.forEach((item, index) => {
         item.createObject();
         item.positionX -= speedX
         item.positionY += fishMvY
         countMov += fishMvY
-        gotShot(item, index, objArr)
+        if(isShooting && shot) {
+            gotShot(item, index, objArr)
+        }
+        if (item.value === 2000) {
+            pipCollidedHuman(item, index, objArr)
+        }
         pipCollided(item, index, objArr)
         if(countMov < -750) {
             fishMvY = 3
@@ -589,28 +614,27 @@ const animate = () => {
             objArr.shift()
         }
     })
-   
 
-    if(humanObj.array5000.length >= 1 || humanObj.array1000.length >= 1) {
-        for(let array in humanObj) {
-            humanObj[array].forEach((item,index) => {
-                item.createObject();
-                item.positionX -= 30
-                item.positionY += fishMvY
-                countMov += fishMvY
+    for(let array in humanObj) {
+        humanObj[array].forEach((item,index) => {
+            item.createObject();
+            item.positionX -= 30
+            item.positionY += fishMvY
+            countMov += fishMvY
+            if (isShooting && shot) {
                 gotShot(item, index, humanObj[array])
-                pipCollided(item, index, humanObj[array])
-                if(countMov < -750) {
-                    fishMvY = 2
-                } else if (countMov > 750) {
-                    fishMvY = -2
-                }
-    
-                if(item.positionX < -10000) {
-                    humanObj[array].shift()
-                }
-            })
-        }
+            }
+            pipCollidedHuman(item, index, humanObj[array])
+            if(countMov < -750) {
+                fishMvY = 2
+            } else if (countMov > 750) {
+                fishMvY = -2
+            }
+
+            if(item.positionX < -10000) {
+                humanObj[array].shift()
+            }
+        })
     }
 
     if(!gameOver) {
@@ -656,27 +680,28 @@ const animate = () => {
         
     }
     
-
-    if (animateGameID % 10 === 0) {
-        countForPush +=  1
-        if(countForPush % recursive1 === 0) {
-            drawFish(countForPush)
-        } else if (countForPush % recursive2 === 0) {
-            drawFish(countForPush)
-        } else if (countForPush % recursive3 === 0) {
-            drawFish(countForPush)
-        } else if (countForPush % recursive4 === 0) {
-            drawFish(countForPush)
-        } else if (countForPush % recursive5 === 0) {
-            drawFish(countForPush)
-        } else if (countForPush % recursive6 === 0) {
-            drawFish(countForPush)
-        } else if (countForPush % recursive7 === 0) {
-            drawFish(countForPush)
-        } else if (countForPush % recursive8 === 0) {
-            drawFish(countForPush)
-        } else if (countForPush % recursive9 === 0) {
-            drawFish(countForPush)
+    if(objArr.length < 4 && humanObj.array1000.length < 3 && humanObj.array5000.length < 3) {
+        if (animateGameID % 10 === 0) {
+            countForPush +=  1
+            if(countForPush % recursive1 === 0) {
+                drawFish(countForPush)
+            } else if (countForPush % recursive2 === 0) {
+                drawFish(countForPush)
+            } else if (countForPush % recursive3 === 0) {
+                drawFish(countForPush)
+            } else if (countForPush % recursive4 === 0) {
+                drawFish(countForPush)
+            } else if (countForPush % recursive5 === 0) {
+                drawFish(countForPush)
+            } else if (countForPush % recursive6 === 0) {
+                drawFish(countForPush)
+            } else if (countForPush % recursive7 === 0) {
+                drawFish(countForPush)
+            } else if (countForPush % recursive8 === 0) {
+                drawFish(countForPush)
+            } else if (countForPush % recursive9 === 0) {
+                drawFish(countForPush)
+            }
         }
     }
 }
