@@ -47,7 +47,6 @@ body {
 }
 
 .button:hover {
-    /* transform: scale(1.05); */
     transform: scale(1.1);
     transition: transform .5s ease-in-out;
     cursor: pointer;
@@ -64,10 +63,10 @@ body {
     animation: wave 10s ease-in-out infinite;
 }
 
-.start-fade {
+.fade {
     opacity: 0;
     transform: scale(2,2);
-    transition: all 3s ease-in-out;
+    transition: all 2s ease-in-out;
 }
 
 .game-intro {
@@ -104,10 +103,11 @@ body {
     }
 }
 
-.title-intro:nth-child(1) {
+.title-intro.text-bg.pip {
     font-size: 7rem;
-    padding: 0 .7rem
+    padding: 0 .7rem;
 }
+
 .title-intro:nth-child(2) {
     margin-bottom: 1.2rem;
 }
@@ -149,8 +149,7 @@ body {
 
 #game-board {
     position: relative;
-    display: none;
-    animation: fadeIn 5s ease 1;
+    animation: fadeIn 3s ease 1;
 }
 
 @keyframes fadeIn {
@@ -233,7 +232,6 @@ body {
 /* \\\ GAME OVER //// */
 /* \\\ GAME OVER //// */
 .game-over-bg {
-    display: none;
     background: linear-gradient(45deg, rgb(21, 106, 217), rgb(113, 170, 232), rgb(115, 221, 248), rgb(64, 134, 226));
     background-size: 300% 300%;
     animation: animateTitle 10s ease infinite;
@@ -243,7 +241,7 @@ body {
     background: url("../images/seaBG.png");
     background-repeat: no-repeat;
     background-size: 120%;
-    animation: wave 10s ease-in-out infinite;
+    animation: wave 8s ease-in-out infinite;
 }
 
 @keyframes wave {
@@ -301,4 +299,10 @@ body {
     html {
         font-size: 12px;
     }
+}
+.show {
+    display: block;
+}
+.hide {
+    display: none;
 }

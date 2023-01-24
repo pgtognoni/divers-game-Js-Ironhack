@@ -209,12 +209,12 @@ ctx.scale(.1,.1)
 
 /*/--- Global Variables ---/*/
 const minY = CANVAS_Y/2;
-const maxY = CANVAS_Y*10 - CANVAS_Y*10/4.5
+const maxY = CANVAS_Y*10 - CANVAS_Y*10/3
 const positionX = CANVAS_X*10
 let isMovingUP = false
 let isMovingDown = false
 let gameOver = false;
-let GameScore = 0;
+let gameScore = 0;
 let positionY = 0;
 let speedX = 25;
 
@@ -222,7 +222,7 @@ let speedX = 25;
 let recursive1 = 57;
 let recursive2 = 47;
 let recursive3 = 770;
-let recursive4 = 570;
+let recursive4 = 450;
 let recursive5 = 240;
 let recursive6 = 365;
 let recursive7 = 185;
@@ -239,7 +239,7 @@ const pipWidth = CANVAS_X*2;
 const pipHeight = CANVAS_Y*2;
 let pipY = CANVAS_Y*4;
 let pipSpeed = 100;
-pip.src = '../images/scuba.png';
+pip.src = '../images/pip.png';
 
 const coral = new Image();
 coral.src = '../images/coral.png'
@@ -252,7 +252,7 @@ const drawPip = () => {
     if (isMovingUP && pipY > minY) {
         pipY -= pipSpeed
     }
-    if (isMovingDown && pipY < maxY) {
+    if (isMovingDown && pipY < CANVAS_Y*10 - CANVAS_Y*10/4.5) {
         pipY += pipSpeed
     }
 }
@@ -261,16 +261,17 @@ const drawPip = () => {
 /*/--- OBSTACLES ---/*/
 /*/--- OBSTACLES ---/*/
 
-const objArr = {
-    array50: [],
-    array75: [],
-    array100: [],
-    array300: [],
-    array500: [],
-    array1000: [],
-    array2000: [],
-    garbageArr: [],
-}
+const objArr = [];
+
+// array50: [],
+// array75: [],
+// array100: [],
+// array300: [],
+// array500: [],
+// array1000: [],
+// array2000: [],
+// garbageArr: [],
+
 const humanObj = {
     array1000: [],
     array5000: [],
@@ -337,56 +338,64 @@ const drawFish = (count) => {
         const width = CANVAS_X;
         const height = CANVAS_Y*1.5;
         const newObstacle = createElement(arr, width, height)
-        objArr.array50.push(newObstacle)
+        objArr.push(newObstacle)
     } else if (count % recursive2 == 0) {
         const arr = imageArr[5]
-        const width = CANVAS_X*1.1;
-        const height = CANVAS_Y*1.5;
+        const width = CANVAS_X*1;
+        const height = CANVAS_Y*1.4;
         const newObstacle = createElement(arr, width, height)
-        objArr.garbageArr.push(newObstacle)
+        //objArr.garbageArr.push(newObstacle)
+        objArr.push(newObstacle)
     } else if (count % recursive3 == 0) {
         const arr = imageArr[1].filter(item => item.value == 5000)
         const width = CANVAS_X*4;
         const height = CANVAS_Y*4;
         const newObstacle = createHuman(arr, width, height)
         humanObj.array5000.push(newObstacle)
+        //objArr.array50.push(newObstacle)
     } else if (count % recursive4 == 0) {
         const arr = imageArr[1].filter(item => item.value == 1000)
         const width = CANVAS_X*4;
         const height = CANVAS_Y*4;
         const newObstacle = createHuman(arr, width, height)
+        console.log('submarine')
         humanObj.array1000.push(newObstacle)
+        // objArr.array50.push(newObstacle)
     } else if (count % recursive5 == 0) {
         const arr = imageArr[0].filter(item => item.value == 2000)
-        console.log(arr)
-        const width = CANVAS_X*4;
+        const width = CANVAS_X*4.5;
         const height = CANVAS_Y*4;
         const newObstacle = createElement(arr, width, height)
-        objArr.array2000.push(newObstacle)
+        //objArr.array2000.push(newObstacle)
+        objArr.push(newObstacle)
     } else if (count % recursive6 == 0) {
         const arr = imageArr[0].filter(item => item.value == 75)
         const width = CANVAS_X;
         const height = CANVAS_Y*1.2;
         const newObstacle = createElement(arr, width, height)
-        objArr.array75.push(newObstacle)
+        //objArr.array75.push(newObstacle)
+        objArr.push(newObstacle)
     } else if (count % recursive7 == 0) {
         const arr = imageArr[0].filter(item => item.value == 100)
         const width = CANVAS_X*1.7;
         const height = CANVAS_Y*1.8;
         const newObstacle = createElement(arr, width, height)
-        objArr.array100.push(newObstacle)
+        //objArr.array100.push(newObstacle)
+        objArr.push(newObstacle)
     } else if (count % recursive8 == 0) {
         const arr = imageArr[0].filter(item => item.value == 300)
         const width = CANVAS_X*1.4;
         const height = CANVAS_Y*2;
         const newObstacle = createElement(arr, width, height)
-        objArr.array300.push(newObstacle)
+        //objArr.array300.push(newObstacle)
+        objArr.push(newObstacle)
     } else if (count % recursive9 == 0) {
         const arr = imageArr[0].filter(item => item.value == 500)
         const width = CANVAS_X*1.5;
         const height = CANVAS_Y*1.7;
         const newObstacle = createElement(arr, width, height)
-        objArr.array500.push(newObstacle)
+        //objArr.array500.push(newObstacle)
+        objArr.push(newObstacle)
     }        
 }
 
@@ -464,7 +473,7 @@ const displayScore = (name, value, itemY, itemX) => {
     let newScore;
     scoreX = itemX
     if (name == 'humans' || name == 'garbage') {
-        GameScore += value
+        gameScore += value
         score.map(item => {
             if(item['value'] === value && item['action'] === 'sum') {
             newScore = item
@@ -473,7 +482,7 @@ const displayScore = (name, value, itemY, itemX) => {
         const element = new Objstacle(itemX, itemY, CANVAS_X/1.2, CANVAS_Y/1.2, newScore.src, newScore.family, newScore.value)
         scoreArr.push(element) 
     } else {
-        GameScore -= value
+        gameScore -= value
         score.map(item => {
             if(item['value'] === value && item['action'] === 'substract') {
             newScore = item
@@ -516,9 +525,8 @@ const pipCollided = (item, index, array) => {
         && pipY + pipHeight/3  > itemY - height/2) {
             array.splice(index,1)
         if(group == 'garbage') {
-            GameScore += value;
-        } else GameScore -= value;
-        console.log(GameScore)
+            gameScore += value;
+        } else gameScore -= value;
     }
 }
 /*/--- End ---/*/
@@ -527,13 +535,21 @@ const pipCollided = (item, index, array) => {
 let countForPush = 0; 
 let fishMvY = -10;
 let countMov = 0;
+let countForSpeed = 0;
 
 const animate = () => {
     bgctx.clearRect(0, 0, bgX, bgY)
     ctx.clearRect(0, 0, CANVAS_X*10, CANVAS_Y*10)
-    document.getElementById('score').innerHTML = GameScore
+    
+    if (gameScore < 0) {
+        document.getElementById('score').innerHTML = 0
+    } else document.getElementById('score').innerHTML = gameScore
+
     drawBG()
     drawPip()
+    
+    countForSpeed += 1;
+
     if (isShooting){
         bulletShoot()
     }
@@ -544,27 +560,33 @@ const animate = () => {
         drawBullet()
     }
 
-   
-
-    for (let array in objArr) {
-        objArr[array].forEach((item, index) => {
-            item.createObject();
-            item.positionX -= speedX
-            item.positionY += fishMvY
-            countMov += fishMvY
-            gotShot(item, index, objArr[array])
-            pipCollided(item, index, objArr[array])
-            if(countMov < -750) {
-                fishMvY = 3
-            } else if (countMov > 750) {
-                fishMvY = -3
-            }
-
-            if(item.positionX < -2500) {
-                objArr[array].shift()
-            }
-        })
+    if (countForSpeed % 550 == 0 && countForSpeed != 0) {
+        speedX += 1;
     }
+
+    if (gameScore < 0) {
+        gameOver = true
+    }
+
+    
+    objArr.forEach((item, index) => {
+        item.createObject();
+        item.positionX -= speedX
+        item.positionY += fishMvY
+        countMov += fishMvY
+        gotShot(item, index, objArr)
+        pipCollided(item, index, objArr)
+        if(countMov < -750) {
+            fishMvY = 3
+        } else if (countMov > 750) {
+            fishMvY = -3
+        }
+
+        if(item.positionX < -2500) {
+            objArr.shift()
+        }
+    })
+   
 
     if(humanObj.array5000.length >= 1 || humanObj.array1000.length >= 1) {
         for(let array in humanObj) {
@@ -591,7 +613,42 @@ const animate = () => {
     if(!gameOver) {
         animateGameID = requestAnimationFrame(animate)
     } else { 
-        cancelAnimationFrame(animateGameId);
+
+        cancelAnimationFrame(animateGameID);
+        bgctx.clearRect(0, 0, bgX, bgY)
+        ctx.clearRect(0, 0, CANVAS_X*10, CANVAS_Y*10)
+        countForPush = 0; 
+        fishMvY = -10;
+        countMov = 0;
+        countForSpeed = 0;
+        isMovingUP = false
+        isMovingDown = false
+        gameOver = false;
+        gameScore = 0;
+        positionY = 0;
+        speedX = 25;
+        pipY = CANVAS_Y*4;
+
+        const gameCanvas = document.getElementById('game-board');
+        gameCanvas.classList.add('fade');
+        setTimeout(() => {
+            gameCanvas.classList.add('hide')
+            gameCanvas.classList.remove('show')
+            clearTimeout()
+        }, 1800);
+        const gameOverBg = document.querySelector('.game-over-bg');
+        gameOverBg.classList.remove('fade', 'hide')
+        gameOverBg.classList.add('show');
+        if (gameScore < 0) {
+            gameScore = 0;
+            document.querySelector('.score .final-score').innerHTML = `${gameScore} PIP`
+        } else document.querySelector('.score .final-score').innerHTML = `${gameScore} PIP`
+
+        humanObj.array1000.splice(0, humanObj.array1000.length);
+        humanObj.array5000.splice(0, humanObj.array5000.length);
+        objArr.splice(0, objArr.length);
+        scoreArr.splice(0,scoreArr.length)
+        
     }
     
 
@@ -631,48 +688,86 @@ function setCanvasSize(){
     document.getElementById('canvas-bg').style.width = width + "px";
 }
 
-document.querySelector('#start-button').addEventListener('click', () => {
-    const startBg = document.querySelector('.moving-bg');
-    startBg.classList.add('start-fade');
-    setTimeout(() => {
-        startBg.style.display = 'none'
-        clearTimeout()
-    }, 1500)
-    //if (startBg.classList.contains('start-fade')) startBg.style.display = 'none'
-    const gameCanvas = document.getElementById('game-board');
-    gameCanvas.style.display='block';
-})
 
 window.onload = () => {
-
-    setCanvasSize()
-    animate()
-    drawFish(100)
+    document.querySelector('#start-button').addEventListener('click', () => {
+        startGame()
+    })
     
+    setCanvasSize()
 
     window.addEventListener("resize",setCanvasSize,false);
 
-    document.addEventListener('keydown', event => {
+    const gameOverBg = document.querySelector('.game-over-bg');
+    gameOverBg.classList.add('hide');
     
-        if (event.key === "ArrowUp") {
-            // move paddle to the left
-            isMovingUP = true
-        }
-        if (event.key === "ArrowDown") {
-            // move paddle to the right
-            isMovingDown = true
-        }
-        if(event.key === " ") {
-            // shoot 
-            isShooting = true;
+    const startGame = () => {
+        
+        const startBg = document.querySelector('.moving-bg');
+        startBg.classList.add('fade');
+        setTimeout(() => {
+            startBg.classList.add('hide')
+            clearTimeout()
+        }, 1700)
+       
+        const gameCanvas = document.getElementById('game-board');
+        gameCanvas.classList.remove('hide', 'fade')
+        gameCanvas.classList.add('show');
+        
+        animate()
+        drawFish(100)
+
+        document.addEventListener('keydown', event => {
             
-        }
+            if (event.key === "ArrowUp") {
+                // move paddle to the left
+                isMovingUP = true
+            }
+            if (event.key === "ArrowDown") {
+                // move paddle to the right
+                isMovingDown = true
+            }
+            if(event.key === " ") {
+                // shoot 
+                isShooting = true;
+                
+            }
+        })
+
+        document.addEventListener('keyup', () => {
+            // Stop moving the paddle
+            isMovingUP = false
+            isMovingDown = false 
+        })
+
+    }
+
+    document.querySelector('#reStart').addEventListener('click', () => {
+        const gameOverBg = document.querySelector('.game-over-bg');
+        gameOverBg.classList.add('fade');
+        setTimeout(() => {
+            gameOverBg.classList.add('hide')
+            gameOverBg.classList.remove('show')
+            clearTimeout()
+        }, 1700)
+
+        startGame()
     })
 
-    document.addEventListener('keyup', () => {
-        // Stop moving the paddle
-        isMovingUP = false
-        isMovingDown = false 
+    document.querySelector('.home-icon').addEventListener('click', () => {
+        const gameOverBg = document.querySelector('.game-over-bg');
+        gameOverBg.classList.add('fade');
+        setTimeout(() => {
+            gameOverBg.classList.add('hide')
+            gameOverBg.classList.remove('show')
+            clearTimeout()
+        }, 1000)
+        const startBg = document.querySelector('.moving-bg');
+        startBg.classList.remove('hide', 'fade')
+        setTimeout(() => {
+            startBg.classList.add('show');
+            clearTimeout()
+        }, 1000)
+        gameOver = false;
     })
-    
 }
