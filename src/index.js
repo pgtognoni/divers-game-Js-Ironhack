@@ -214,6 +214,7 @@ ctx.scale(.1,.1)
 /*/--- Global Variables ---/*/
 const audio = document.getElementById('transition')
 const waterAudio = document.getElementById('underWater')
+const music = document.getElementById('musicGame')
 const minY = CANVAS_Y/2;
 const maxY = CANVAS_Y*10 - CANVAS_Y*10/3
 const positionX = CANVAS_X*10
@@ -225,7 +226,6 @@ let positionY = 0;
 let speedX = 35;
 
 /* variables for recursive images */
-//let recursiveArr = [37,27,67,117,97,107,127,57,77]
 
 let recursive1 = 37;
 let recursive2 = 27;
@@ -597,20 +597,20 @@ const animate = () => {
 
     if (countForSpeed % 550 == 0 && countForSpeed != 0) {
         speedX += 3;
-        if (recursive4 > 15) {
+        if (recursive4 > 40) {
             if(recursive2 > 10) {
                 recursive1 -= 4;
                 recursive2 -= 4;
                 recursive8 -= 4;
             }
-            if (recursive7 > 20) {
+            if (recursive3 > 30) {
                 recursive3 -= 10;
                 recursive5 -= 10;
                 recursive9 -= 10;
             }
-            recursive4 -= 30;
-            recursive6 -= 30;
-            recursive7 -= 30;
+            recursive4 -= 20;
+            recursive6 -= 20;
+            recursive7 -= 20;
         }
         console.log(recursive1, speedX)
     }
@@ -766,10 +766,9 @@ window.onload = () => {
     const gameCanvas = document.getElementById('game-board');
     gameCanvas.classList.add('hide')
 
-    const music = document.getElementById('musicGame')
     setTimeout(() => {
         music.play();
-    }, 500)
+    }, 400)
     music.volume = 0.3;
     
     document.addEventListener('keydown', event => {
