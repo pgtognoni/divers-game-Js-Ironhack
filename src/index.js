@@ -2,74 +2,74 @@
 /*/--- Image Src ---/*/
 const srcObj = {
     50: [
-        '../images/50/crab.png',
-        '../images/100/erizo.png',
-        '../images/1000/seaHorse.png',
+        './images/50/crab.png',
+        './images/100/erizo.png',
+        './images/1000/seaHorse.png',
     ],
     75: [
-        '../images/75/goldenfish.png',
-        '../images/75/greyfish.png',
-        '../images/75/nemo.png',
-        '../images/75/redfish.png',
+        './images/75/goldenfish.png',
+        './images/75/greyfish.png',
+        './images/75/nemo.png',
+        './images/75/redfish.png',
     ],
     100: [
-        '../images/100/blueFish.png',
-        '../images/100/boy1.png',
-        '../images/100/orangefish.png',
+        './images/100/blueFish.png',
+        './images/100/boy1.png',
+        './images/100/orangefish.png',
     ],
     300: [
-        '../images/300/girl1.png',
-        '../images/300/jelly1.png',
-        '../images/300/jelly2.png',
+        './images/300/girl1.png',
+        './images/300/jelly1.png',
+        './images/300/jelly2.png',
     ],
     500: [
-        '../images/500/seaHorse1.png',
-        '../images/500/turtle1.png',
-        '../images/1000/octopus.png',
-        '../images/500/turtle2.png',
+        './images/500/seaHorse1.png',
+        './images/500/turtle1.png',
+        './images/1000/octopus.png',
+        './images/500/turtle2.png',
     ],
     1000: [
-        '../images/1000/submarine/submarine1.png',
-        '../images/1000/submarine/submarine2.png',
-        '../images/1000/diverHarpoon.png',
+        './images/1000/submarine/submarine1.png',
+        './images/1000/submarine/submarine2.png',
+        './images/1000/diverHarpoon.png',
     ],
     2000: [
-        '../images/500/shark3.png',
-        '../images/500/shark4.png',
+        './images/500/shark3.png',
+        './images/500/shark4.png',
     ],
     2500: [
-        '../images/5000/mine.png',
+        './images/5000/mine.png',
     ],
     5000: [
-        '../images/5000/aquaman.png',
+        './images/5000/aquaman.png',
     ],
     scores: [
-        '../images/buttons/G50.png',
-        '../images/buttons/G75.png',
-        '../images/buttons/G100.png',
-        '../images/buttons/G300.png',
-        '../images/buttons/G500.png',
-        '../images/buttons/G1000.png',
-        '../images/buttons/G2000.png',
-        '../images/buttons/G2500.png',
-        '../images/buttons/G5000.png',
-        '../images/buttons/R50.png',
-        '../images/buttons/R75.png',
-        '../images/buttons/R100.png',
-        '../images/buttons/R300.png',
-        '../images/buttons/R500.png',
-        '../images/buttons/R1000.png',
-        '../images/buttons/R2000.png',
-        '../images/buttons/R5000.png',
+        './images/buttons/G50.png',
+        './images/buttons/G75.png',
+        './images/buttons/G100.png',
+        './images/buttons/G300.png',
+        './images/buttons/G500.png',
+        './images/buttons/G1000.png',
+        './images/buttons/G2000.png',
+        './images/buttons/G2500.png',
+        './images/buttons/G5000.png',
+        './images/buttons/R50.png',
+        './images/buttons/R75.png',
+        './images/buttons/R100.png',
+        './images/buttons/R300.png',
+        './images/buttons/R500.png',
+        './images/buttons/R1000.png',
+        './images/buttons/R2000.png',
+        './images/buttons/R5000.png',
     ],
     garbage: [
-        '../images/100/camera.png',
-        '../images/100/cocan.png',
-        '../images/300/plasticbag.png',
-        '../images/300/plasticbag1.png',
-        '../images/300/plasticbag2.png',
-        '../images/500/plasticbottle.png',
-        '../images/500/plasticbottle1.png',
+        './images/100/camera.png',
+        './images/100/cocan.png',
+        './images/300/plasticbag.png',
+        './images/300/plasticbag1.png',
+        './images/300/plasticbag2.png',
+        './images/500/plasticbottle.png',
+        './images/500/plasticbottle1.png',
     ]
 }
 
@@ -409,7 +409,7 @@ const drawFish = (count) => {
 /*/--- BULLETS ---/*/
 /*/--- BULLETS ---/*/
 
-const bulletscr = '../images/bullets/star.png'
+const bulletscr = './images/bullets/star.png'
 const bulletW = CANVAS_X *0.8;
 const bulletH = CANVAS_Y;
 let bulletX = undefined;
