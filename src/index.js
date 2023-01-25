@@ -761,7 +761,7 @@ window.onload = () => {
 
     setTimeout(() => {
         music.play();
-    }, 1000)
+    }, 1500)
     music.volume = 0.3;
     
     document.addEventListener('keydown', event => {
