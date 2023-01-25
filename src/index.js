@@ -174,13 +174,13 @@ const bgX = canvasbg.width;
 const bgY = canvasbg.height;
 
 const bgImg = new Image();
-bgImg.src = '../images/seaBGCrop.png';
+bgImg.src = './images/seaBGCrop.png';
 let seaX = -50;
 let seaY = -50; 
 let bgMove = .1;
 
 const boat = new Image();
-boat.src = '../images/naufragio.png'
+boat.src = './images/naufragio.png'
 
 const drawBG = () => {
     bgctx.globalAlpha = 0.5;
@@ -243,10 +243,10 @@ const pipWidth = CANVAS_X*2;
 const pipHeight = CANVAS_Y*2;
 let pipY = CANVAS_Y*4;
 let pipSpeed = 100;
-pip.src = '../images/pip.png';
+pip.src = './images/pip.png';
 
 const coral = new Image();
-coral.src = '../images/coral.png'
+coral.src = './images/coral.png'
 
 const drawPip = () => {
 
@@ -585,7 +585,7 @@ const animate = () => {
     }
 
     if (countForSpeed % 550 == 0 && countForSpeed != 0) {
-        speedX += 1;
+        speedX += 3;
     }
 
     if (gameScore < 0) {

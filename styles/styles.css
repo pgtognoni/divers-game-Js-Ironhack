@@ -11,6 +11,7 @@ body {
     overflow-y: hidden;
     font-family: 'Roboto', sans-serif;
     background: linear-gradient(60deg, rgb(8, 137, 184), rgb(4, 136, 197), rgb(29, 137, 225), rgb(31, 132, 203));
+    animation: animateTitle 10s ease infinite;
 }
 
 .column-center {
@@ -60,7 +61,7 @@ body {
     display: block;
     background: url('../images/seaBG1.png');
     background-size: cover;
-    animation: wave 10s ease-in-out infinite;
+    animation: wave 6s ease-in-out infinite;
 }
 
 .fade {
@@ -88,7 +89,7 @@ body {
     -webkit-background-clip: text;
     color: transparent;
     -webkit-text-fill-color: transparent;
-    animation: animateTitle 10s ease infinite;
+    animation: animateTitle 6s ease infinite;
 }
 
 @keyframes animateTitle {
@@ -234,7 +235,7 @@ body {
 .game-over-bg {
     background: linear-gradient(45deg, rgb(21, 106, 217), rgb(113, 170, 232), rgb(115, 221, 248), rgb(64, 134, 226));
     background-size: 300% 300%;
-    animation: animateTitle 10s ease infinite;
+    animation: animateTitle 3s ease infinite;
 }
 
 .game-over-sea {
@@ -282,6 +283,12 @@ body {
 /* \\\ END GAME OVER //// */
 /* \\\ END GAME OVER //// */
 /* \\\ END GAME OVER //// */
+
+@media screen and (max-width: 360px) {
+    html {
+        font-size: .5px;
+    }
+}
 
 @media screen and (max-width: 560px) {
     html {
