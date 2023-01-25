@@ -753,7 +753,9 @@ window.onload = () => {
     gameCanvas.classList.add('hide')
 
     const music = document.getElementById('musicGame')
-    music.play();
+    setTimeout(() => {
+        music.play();
+    }, 500)
     music.volume = 0.5;
     
     document.addEventListener('keydown', event => {
