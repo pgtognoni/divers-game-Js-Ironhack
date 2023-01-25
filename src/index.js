@@ -212,6 +212,8 @@ const CANVAS_Y = canvas.height;
 ctx.scale(.1,.1)
 
 /*/--- Global Variables ---/*/
+const audio = document.getElementById('transition')
+const waterAudio = document.getElementById('underWater')
 const minY = CANVAS_Y/2;
 const maxY = CANVAS_Y*10 - CANVAS_Y*10/3
 const positionX = CANVAS_X*10
@@ -223,15 +225,17 @@ let positionY = 0;
 let speedX = 35;
 
 /* variables for recursive images */
+//let recursiveArr = [37,27,67,117,97,107,127,57,77]
+
 let recursive1 = 37;
-let recursive2 = 47;
-let recursive3 = 77;
-let recursive4 = 87;
-let recursive5 = 147;
+let recursive2 = 27;
+let recursive3 = 67;
+let recursive4 = 117;
+let recursive5 = 97;
 let recursive6 = 107;
-let recursive7 = 177;
-let recursive8 = 287;
-let recursive9 = 397;
+let recursive7 = 127;
+let recursive8 = 57;
+let recursive9 = 77;
 
 /*/--- End ---/*/
 
@@ -266,15 +270,6 @@ const drawPip = () => {
 /*/--- OBSTACLES ---/*/
 
 const objArr = [];
-
-// array50: [],
-// array75: [],
-// array100: [],
-// array300: [],
-// array500: [],
-// array1000: [],
-// array2000: [],
-// garbageArr: [],
 
 const humanObj = {
     array1000: [],
@@ -457,23 +452,24 @@ const gotShot = (item, index, array) => {
     if(itemX - width/2 < bulletX
         && bulletY - bulletH/2 < itemY + height/2
         && bulletY + bulletH/2 > itemY - height/2) {
-            array.splice(index,1)
             shot = false;
             isShooting = false;
             bulletY = undefined;
             bulletX = undefined;
             bulletArr.splice(0,1)
             if(name == 'garbage') {
-                const audio = document.getElementById('garbage')
-                audio.play()
+                return
             } if (name == 'humans'){
                 const audio = document.getElementById('waterExplosion')
                 audio.play()
+                array.splice(index,1)
+                displayScore(name, value, itemY, itemX);
             } else {
                 const audio = document.getElementById('fishShot')
                 audio.play()
+                array.splice(index,1)
+                displayScore(name, value, itemY, itemX);
             }
-            displayScore(name, value, itemY, itemX);
     }
 }
 
@@ -560,9 +556,9 @@ const pipCollidedHuman = (item, index, array) => {
     const value = item.value;
     const group = item.name;
 
-    if(itemX - width/2 < pipX 
-        && itemX + width/2 > pipX - pipWidth/2
-        && pipY - pipHeight/3.5  < itemY + height/2
+    if(itemX - width/2.5 < pipX 
+        && itemX + width/1.5 > pipX - pipWidth/1.5
+        && pipY - pipHeight/4  < itemY + height/2
         && pipY + pipHeight/3  > itemY - height/2) {
             array.splice(index,1)
             gameOver = true;
@@ -601,10 +597,29 @@ const animate = () => {
 
     if (countForSpeed % 550 == 0 && countForSpeed != 0) {
         speedX += 3;
+        if (recursive4 > 15) {
+            if(recursive2 > 10) {
+                recursive1 -= 4;
+                recursive2 -= 4;
+                recursive8 -= 4;
+            }
+            if (recursive7 > 20) {
+                recursive3 -= 10;
+                recursive5 -= 10;
+                recursive9 -= 10;
+            }
+            recursive4 -= 30;
+            recursive6 -= 30;
+            recursive7 -= 30;
+        }
+        console.log(recursive1, speedX)
     }
 
     if (gameScore < 0) {
         gameOver = true
+    }
+
+    if (gameScore > 10000) {
     }
 
     objArr.forEach((item, index) => {
@@ -633,7 +648,7 @@ const animate = () => {
     for(let array in humanObj) {
         humanObj[array].forEach((item,index) => {
             item.createObject();
-            item.positionX -= 30
+            item.positionX -= speedX
             item.positionY += fishMvY
             countMov += fishMvY
             if (isShooting && shot) {
@@ -655,9 +670,8 @@ const animate = () => {
     if(!gameOver) {
         animateGameID = requestAnimationFrame(animate)
     } else { 
-        const audio = document.getElementById('gameOverSound')
-        audio.play()
-        const waterAudio = document.getElementById('underWater')
+        const gameOveraudio = document.getElementById('gameOverSound')
+        gameOveraudio.play()
         waterAudio.pause()
         cancelAnimationFrame(animateGameID);
         bgctx.clearRect(0, 0, bgX, bgY)
@@ -756,7 +770,7 @@ window.onload = () => {
     setTimeout(() => {
         music.play();
     }, 500)
-    music.volume = 0.5;
+    music.volume = 0.3;
     
     document.addEventListener('keydown', event => {
         if (event.key.toLowerCase() === "s") {
@@ -773,8 +787,6 @@ window.onload = () => {
             })
         }
     })
-
-    
     
     const startGame = () => {
         
@@ -789,9 +801,7 @@ window.onload = () => {
         gameCanvas.classList.remove('hide', 'fade')
         gameCanvas.classList.add('show');
         
-        const audio = document.getElementById('transition')
         audio.play()
-        const waterAudio = document.getElementById('underWater')
         waterAudio.play()
         waterAudio.volume = .5;
         
@@ -830,7 +840,6 @@ window.onload = () => {
             gameOverBg.classList.remove('show')
             clearTimeout()
         }, 1700)
-        const audio = document.getElementById('transition')
         audio.play()
         startGame()
     })
@@ -842,10 +851,9 @@ window.onload = () => {
         const startBg = document.querySelector('.moving-bg');
         startBg.classList.remove('hide', 'fade')
         startBg.classList.add('show');
-        const audio = document.getElementById('transition')
         audio.play()
-        const waterAudio = document.getElementById('underWater')
         waterAudio.pause()
+        music.play();
     })
 
 }
