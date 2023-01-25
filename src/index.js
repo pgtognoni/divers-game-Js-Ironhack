@@ -270,12 +270,7 @@ const drawPip = () => {
 /*/--- OBSTACLES ---/*/
 
 const objArr = [];
-
-const humanObj = {
-    array1000: [],
-    array5000: [],
-}
-
+const humanObj = [];
 const scoreArr= [];
 const bulletArr = [];
 
@@ -350,14 +345,14 @@ const drawFish = (count) => {
         const width = CANVAS_X;
         const height = CANVAS_Y*1.4;
         const newObstacle = createHuman(arr, width, height)
-        humanObj.array5000.push(newObstacle)
+        humanObj.push(newObstacle)
         //objArr.array50.push(newObstacle)
     }  else if (count % recursive4 == 0) {
         const arr = imageArr[1].filter(item => {if (item.value == 1000 || item.value == 5000) return item })
         const width = CANVAS_X*4;
         const height = CANVAS_Y*4;
         const newObstacle = createHuman(arr, width, height)
-        humanObj.array1000.push(newObstacle)
+        humanObj.push(newObstacle)
         // objArr.array50.push(newObstacle)
     } else if (count % recursive5 == 0) {
         const arr = imageArr[0].filter(item => item.value == 2000)
@@ -558,8 +553,8 @@ const pipCollidedHuman = (item, index, array) => {
 
     if(itemX - width/3 < pipX 
         && itemX + width/3 > pipX - pipWidth/3
-        && pipY - pipHeight/4  < itemY + height/2.5
-        && pipY + pipHeight/3  > itemY - height/3) {
+        && pipY - pipHeight/3  < itemY + height/2
+        && pipY + pipHeight/3  > itemY - height/2) {
             array.splice(index,1)
             gameOver = true;
     }
@@ -612,7 +607,6 @@ const animate = () => {
             recursive6 -= 20;
             recursive7 -= 20;
         }
-        console.log(recursive1, speedX)
     }
 
     if (gameScore < 0) {
@@ -645,27 +639,27 @@ const animate = () => {
         }
     })
 
-    for(let array in humanObj) {
-        humanObj[array].forEach((item,index) => {
-            item.createObject();
-            item.positionX -= speedX
-            item.positionY += fishMvY
-            countMov += fishMvY
-            if (isShooting && shot) {
-                gotShot(item, index, humanObj[array])
-            }
-            pipCollidedHuman(item, index, humanObj[array])
-            if(countMov < -750) {
-                fishMvY = 2
-            } else if (countMov > 750) {
-                fishMvY = -2
-            }
+    
+    humanObj.forEach((item,index) => {
+        item.createObject();
+        item.positionX -= speedX
+        item.positionY += fishMvY
+        countMov += fishMvY
+        if (isShooting && shot) {
+            gotShot(item, index, humanObj)
+        }
+        pipCollidedHuman(item, index, humanObj)
+        if(countMov < -750) {
+            fishMvY = 2
+        } else if (countMov > 750) {
+            fishMvY = -2
+        }
 
-            if(item.positionX < -10000) {
-                humanObj[array].shift()
-            }
-        })
-    }
+        if(item.positionX < -10000) {
+            humanObj.shift()
+        }
+    })
+    
 
     if(!gameOver) {
         animateGameID = requestAnimationFrame(animate)
@@ -673,9 +667,9 @@ const animate = () => {
         const gameOveraudio = document.getElementById('gameOverSound')
         gameOveraudio.play()
         waterAudio.pause()
-        cancelAnimationFrame(animateGameID);
         bgctx.clearRect(0, 0, bgX, bgY)
         ctx.clearRect(0, 0, CANVAS_X*10, CANVAS_Y*10)
+        cancelAnimationFrame(animateGameID);
         
         if (gameScore < 0) {
             gameScore = 0;
@@ -705,15 +699,14 @@ const animate = () => {
         gameOverBg.classList.remove('fade', 'hide')
         gameOverBg.classList.add('show');
 
-        humanObj.array1000.splice(0, humanObj.array1000.length);
-        humanObj.array5000.splice(0, humanObj.array5000.length);
+        humanObj.splice(0, humanObj.length);
         objArr.splice(0, objArr.length);
         scoreArr.splice(0,scoreArr.length);
         bulletArr.splice(0,bulletArr.length);
         
     }
     
-    if(objArr.length < 4 && humanObj.array1000.length < 3 && humanObj.array5000.length < 3) {
+    if(objArr.length < 4 && humanObj.length < 3) {
         if (animateGameID % 10 === 0) {
             countForPush +=  1
             if(countForPush % recursive1 === 0) {
