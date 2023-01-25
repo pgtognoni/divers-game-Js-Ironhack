@@ -17,6 +17,8 @@
                 <p class="rules">Use the up <i class="fa-solid fa-square-caret-up"></i> and down <i class="fa-solid fa-square-caret-down"></i> arrow to help <span class="pip"> PIP </span> clean the Ocean and make it a safer place, and the <span class="space-bar"> space-bar </span> to shot</p>
                 <p class="rules">Watch out for unexpected dangers</p>
                 <button id="start-button" class="button">Start Game</button>
+                <p class="audio-text">To turn the music OFF press <span class="space-bar"> S </span></p>
+                <p class="audio-text">To MUTE all sounds press <span class="space-bar"> A </span></p>
             </div>
         </div>
     </div>
@@ -29,6 +31,15 @@
                 <h2 id="score"></h2>
             </div>
         </div>
+        <audio id="musicGame" src="./audio/gameMusic.mp3" loop></audio>
+        <audio id="underWater" src="./audio/bubbles.wav" loop></audio>
+        <audio id="garbage" src="./audio/garbagepick.wav"></audio>
+        <audio id="transition" src="./audio/transition.wav"></audio>
+        <audio id="bullet" src="./audio/bullet1.wav"></audio>
+        <audio id="collision" src="./audio/collision.wav"></audio>
+        <audio id="fishShot" src="./audio/fishShot.wav"></audio>
+        <audio id="waterExplosion" src="./audio/waterExplosion.wav"></audio>
+        <audio id="gameOverSound" src="./audio/arcdeGameOver.wav"></audio>
     </div>
     <div class="game-over-bg">
         <div class="game-over-sea bg-size">

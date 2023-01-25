@@ -79,7 +79,6 @@ body {
 .intro-container {
     margin-left: 6rem;
     width: 33rem;
-    margin-top: -1.5rem;
 }
 
 .text-bg {
@@ -110,7 +109,7 @@ body {
 }
 
 .title-intro:nth-child(2) {
-    margin-bottom: 1.2rem;
+    margin-bottom: 1rem;
 }
 
 .title-intro {
@@ -124,7 +123,7 @@ body {
     color: rgb(239, 238, 238);
     font-size: 1.5rem;
     text-align: center;
-    line-height: 2.2rem;
+    line-height: 2rem;
     margin: 0;
 }
 
@@ -138,6 +137,24 @@ body {
     border-radius: .2rem;
     vertical-align: .2rem;
     font-weight: 600;
+}
+
+#start-button {
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+.audio-text {
+    color: #fff;
+    margin: 0;
+    margin-top: .5rem;
+    font-size: .8rem;
+}
+
+.audio-text .space-bar {
+    font-size: .6rem;
+    padding: .1rem .3rem;
+    vertical-align: .1rem;
 }
 
 /* \\\ END LANDING PAGE //// */
@@ -294,22 +311,62 @@ body {
     html {
         font-size: 1px;
     }
+    .title-intro.text-bg.pip {
+        font-size: 2rem;
+    }
+    
+    .title-intro {
+        font-size: 2rem;
+    }
+    
+    .rules {
+        font-size: .8rem;
+    }
 }
 
 @media screen and (max-width: 768px) {
     html {
         font-size: 10px;
     }
-}
-
-@media screen and (max-width: 1024px) {
-    html {
-        font-size: 12px;
+    .title-intro.text-bg.pip {
+        font-size: 5rem;
+    }
+    
+    .title-intro {
+        font-size: 3rem;
+    }
+    
+    .rules {
+        font-size: 1rem;
     }
 }
+@media screen and (max-width: 1024px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .intro-container {
+        margin-top: -3rem;
+    }
+}
+
 .show {
-    display: block;
+    /* display: block; */
+    animation: animateShow 1s ease-in
 }
 .hide {
     display: none;
+}
+
+@keyframes animateShow {
+
+    0% {
+        display: block;
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }

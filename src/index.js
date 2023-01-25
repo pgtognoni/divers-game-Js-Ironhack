@@ -363,7 +363,6 @@ const drawFish = (count) => {
         const height = CANVAS_Y*4;
         const newObstacle = createHuman(arr, width, height)
         humanObj.array1000.push(newObstacle)
-        console.log('human')
         // objArr.array50.push(newObstacle)
     } else if (count % recursive5 == 0) {
         const arr = imageArr[0].filter(item => item.value == 2000)
@@ -419,6 +418,9 @@ let isShooting = false;
 let shot = false;
 
 const drawBullet = () => {
+    const audio = document.getElementById('bullet')
+    audio.play()
+
     bulletArr.forEach((item, index) => {
         item.createObject();
         item.positionX += bulletSpeed
@@ -452,15 +454,25 @@ const gotShot = (item, index, array) => {
     const name = item.name;
     const height = item.height;
 
-    if(itemX  < bulletX
+    if(itemX - width/2 < bulletX
         && bulletY - bulletH/2 < itemY + height/2
-        && bulletY  > itemY - height/2) {
+        && bulletY + bulletH/2 > itemY - height/2) {
             array.splice(index,1)
             shot = false;
             isShooting = false;
             bulletY = undefined;
             bulletX = undefined;
             bulletArr.splice(0,1)
+            if(name == 'garbage') {
+                const audio = document.getElementById('garbage')
+                audio.play()
+            } if (name == 'humans'){
+                const audio = document.getElementById('waterExplosion')
+                audio.play()
+            } else {
+                const audio = document.getElementById('fishShot')
+                audio.play()
+            }
             displayScore(name, value, itemY, itemX);
     }
 }
@@ -527,9 +539,16 @@ const pipCollided = (item, index, array) => {
             array.splice(index,1)
         if(group == 'garbage') {
             gameScore += value;
+            const audio = document.getElementById('garbage')
+            audio.play()
         } else if (value === 2000 || value === 1000 || value === 5000 || value === 2500) {
             gameOver = true;
-        } else gameScore -= value;
+        } else {
+            gameScore -= value;
+            const audio = document.getElementById('collision')
+            audio.play()
+        }
+            
     }
 }
 
@@ -546,11 +565,7 @@ const pipCollidedHuman = (item, index, array) => {
         && pipY - pipHeight/3.5  < itemY + height/2
         && pipY + pipHeight/3  > itemY - height/2) {
             array.splice(index,1)
-        if(group == 'garbage') {
-            gameScore += value;
-        } else if (value === 2000 || value === 1000 || value === 5000 || value === 2500) {
             gameOver = true;
-        } else gameScore -= value;
     }
 }
 /*/--- End ---/*/
@@ -640,7 +655,10 @@ const animate = () => {
     if(!gameOver) {
         animateGameID = requestAnimationFrame(animate)
     } else { 
-
+        const audio = document.getElementById('gameOverSound')
+        audio.play()
+        const waterAudio = document.getElementById('underWater')
+        waterAudio.pause()
         cancelAnimationFrame(animateGameID);
         bgctx.clearRect(0, 0, bgX, bgY)
         ctx.clearRect(0, 0, CANVAS_X*10, CANVAS_Y*10)
@@ -676,7 +694,8 @@ const animate = () => {
         humanObj.array1000.splice(0, humanObj.array1000.length);
         humanObj.array5000.splice(0, humanObj.array5000.length);
         objArr.splice(0, objArr.length);
-        scoreArr.splice(0,scoreArr.length)
+        scoreArr.splice(0,scoreArr.length);
+        bulletArr.splice(0,bulletArr.length);
         
     }
     
@@ -730,6 +749,30 @@ window.onload = () => {
 
     const gameOverBg = document.querySelector('.game-over-bg');
     gameOverBg.classList.add('hide');
+    const gameCanvas = document.getElementById('game-board');
+    gameCanvas.classList.add('hide')
+
+    const music = document.getElementById('musicGame')
+    music.play();
+    music.volume = 0.5;
+    
+    document.addEventListener('keydown', event => {
+        if (event.key.toLowerCase() === "s") {
+            if (!music.paused) {
+                music.pause();
+            } else music.play()
+        }
+    })
+
+    document.addEventListener('keydown', event => {
+        if (event.key.toLowerCase() === "a") {
+            document.querySelectorAll('audio').forEach(audio => {   
+                audio.muted = !audio.muted;              
+            })
+        }
+    })
+
+    
     
     const startGame = () => {
         
@@ -739,10 +782,16 @@ window.onload = () => {
             startBg.classList.add('hide')
             clearTimeout()
         }, 1700)
-       
+        
         const gameCanvas = document.getElementById('game-board');
         gameCanvas.classList.remove('hide', 'fade')
         gameCanvas.classList.add('show');
+        
+        const audio = document.getElementById('transition')
+        audio.play()
+        const waterAudio = document.getElementById('underWater')
+        waterAudio.play()
+        waterAudio.volume = .5;
         
         animate()
         drawFish(recursive1)
@@ -779,7 +828,8 @@ window.onload = () => {
             gameOverBg.classList.remove('show')
             clearTimeout()
         }, 1700)
-
+        const audio = document.getElementById('transition')
+        audio.play()
         startGame()
     })
 
@@ -790,5 +840,10 @@ window.onload = () => {
         const startBg = document.querySelector('.moving-bg');
         startBg.classList.remove('hide', 'fade')
         startBg.classList.add('show');
+        const audio = document.getElementById('transition')
+        audio.play()
+        const waterAudio = document.getElementById('underWater')
+        waterAudio.pause()
     })
+
 }
