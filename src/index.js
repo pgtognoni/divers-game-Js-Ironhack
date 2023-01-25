@@ -556,10 +556,10 @@ const pipCollidedHuman = (item, index, array) => {
     const value = item.value;
     const group = item.name;
 
-    if(itemX - width/2.5 < pipX 
-        && itemX + width/1.5 > pipX - pipWidth/1.5
-        && pipY - pipHeight/4  < itemY + height/2
-        && pipY + pipHeight/3  > itemY - height/2) {
+    if(itemX - width/3 < pipX 
+        && itemX + width/3 > pipX - pipWidth/3
+        && pipY - pipHeight/4  < itemY + height/2.5
+        && pipY + pipHeight/3  > itemY - height/3) {
             array.splice(index,1)
             gameOver = true;
     }
