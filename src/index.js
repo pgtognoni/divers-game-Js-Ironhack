@@ -1,28 +1,28 @@
 /*/--- Image Src ---/*/
 /*/--- Image Src ---/*/
 const srcObj = {
-    50: [
+    500: [
         './images/50/crab.png',
         './images/100/erizo.png',
         './images/1000/seaHorse.png',
     ],
-    75: [
+    750: [
         './images/75/goldenfish.png',
         './images/75/greyfish.png',
         './images/75/nemo.png',
         './images/75/redfish.png',
     ],
-    100: [
+    1250: [
         './images/100/blueFish.png',
         './images/100/boy1.png',
         './images/100/orangefish.png',
     ],
-    300: [
+    1750: [
         './images/300/girl1.png',
         './images/300/jelly1.png',
         './images/300/jelly2.png',
     ],
-    500: [
+    1500: [
         './images/500/seaHorse1.png',
         './images/500/turtle1.png',
         './images/1000/octopus.png',
@@ -57,6 +57,10 @@ const srcObj = {
         './images/buttons/R75.png',
         './images/buttons/R100.png',
         './images/buttons/R300.png',
+        './images/buttons/R750.png',
+        './images/buttons/R1250.png',
+        './images/buttons/R1500.png',
+        './images/buttons/R1750.png',
         './images/buttons/R500.png',
         './images/buttons/R1000.png',
         './images/buttons/R2000.png',
@@ -83,7 +87,7 @@ const createNew = (srcObj) => {
     const garbageArr = [];
     
     for(let value in srcObj) {
-        if(value == 50 || value == 75 || value == 100 || value == 300 || value == 500 || value == 2000) {
+        if(value == 500 || value == 750 || value == 1250 || value == 1750 || value == 1500 || value == 2000) {
             srcObj[value].forEach(src => {
                 const val =  {
                     family: 'life',
@@ -328,14 +332,14 @@ const drawFish = (count) => {
     positionY = Math.floor(Math.random() * (maxY - minY + 1) + minY);
     
     if (count % recursive1 == 0) {
-        const arr = imageArr[0].filter(item => item.value == 50)
+        const arr = imageArr[0].filter(item => item.value == 500)
         const width = CANVAS_X;
         const height = CANVAS_Y*1.5;
         const newObstacle = createElement(arr, width, height)
         objArr.push(newObstacle)
     } else if (count % recursive2 == 0) {
         const arr = imageArr[5]
-        const width = CANVAS_X*1;
+        const width = CANVAS_X;
         const height = CANVAS_Y*1.4;
         const newObstacle = createElement(arr, width, height)
         //objArr.garbageArr.push(newObstacle)
@@ -363,28 +367,28 @@ const drawFish = (count) => {
         objArr.push(newObstacle)
     } 
     else if (count % recursive6 == 0) {
-        const arr = imageArr[0].filter(item => item.value == 75)
+        const arr = imageArr[0].filter(item => item.value == 750)
         const width = CANVAS_X;
         const height = CANVAS_Y*1.2;
         const newObstacle = createElement(arr, width, height)
         //objArr.array75.push(newObstacle)
         objArr.push(newObstacle)
     } else if (count % recursive7 == 0) {
-        const arr = imageArr[0].filter(item => item.value == 100)
+        const arr = imageArr[0].filter(item => item.value == 1250)
         const width = CANVAS_X*1.7;
         const height = CANVAS_Y*1.8;
         const newObstacle = createElement(arr, width, height)
         //objArr.array100.push(newObstacle)
         objArr.push(newObstacle)
     } else if (count % recursive8 == 0) {
-        const arr = imageArr[0].filter(item => item.value == 300)
+        const arr = imageArr[0].filter(item => item.value == 1750)
         const width = CANVAS_X*1.4;
         const height = CANVAS_Y*2;
         const newObstacle = createElement(arr, width, height)
         //objArr.array300.push(newObstacle)
         objArr.push(newObstacle)
     } else if (count % recursive9 == 0) {
-        const arr = imageArr[0].filter(item => item.value == 500)
+        const arr = imageArr[0].filter(item => item.value == 1500)
         const width = CANVAS_X*1.5;
         const height = CANVAS_Y*1.7;
         const newObstacle = createElement(arr, width, height)
@@ -706,7 +710,7 @@ const animate = () => {
         
     }
     
-    if(objArr.length < 4 && humanObj.length < 3) {
+    if(objArr.length < 4 && humanObj.length <= 2) {
         if (animateGameID % 10 === 0) {
             countForPush +=  1
             if(countForPush % recursive1 === 0) {
@@ -846,6 +850,9 @@ window.onload = () => {
         audio.play()
         waterAudio.pause()
         music.play();
+        document.querySelectorAll('audio').forEach(audio => {   
+            audio.muted = false;              
+        })
     })
 
 }
