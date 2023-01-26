@@ -18,17 +18,19 @@ PIP The Diver is a game where the player has to pick the garbage under the sea a
 
 First create a data source Object for all the images and function that loops that object to add properties to each path inside the source Object. This data will then be use for every image in the game. The game uses the Canvas element to animate the images. There are 2 canvas overlapped, one is only for the background. Some of the main functions are: 
 
-- drawBG() {}
-- drawPip() {}
-- drawFish() {}
-- drawBullet() {}
-- bulletShoot() {}
-- gotShot() {}
-- displayScore() {}
-- drawScore() {}
-- pipCollided() {}
-- pipCollidedHuman() {}
-- animate() {}
+```
+drawBG() {}
+drawPip() {}
+drawFish() {}
+drawBullet() {}
+bulletShoot() {}
+gotShot() {}
+displayScore() {}
+drawScore() {}
+pipCollided() {}
+pipCollidedHuman() {}
+animate() {}
+```
 
 And to dinamically set the canvas size to the window size: 
 
