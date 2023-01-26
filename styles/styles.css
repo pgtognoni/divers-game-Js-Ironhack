@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata&display=swap');
 
 /* \\\ GLOBAL CLASSES  //// */
 
@@ -78,7 +79,7 @@ body {
 
 .intro-container {
     margin-left: 6rem;
-    width: 33rem;
+    width: 38rem;
 }
 
 .text-bg {

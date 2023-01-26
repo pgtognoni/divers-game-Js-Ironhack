@@ -456,7 +456,7 @@ const gotShot = (item, index, array) => {
             bulletY = undefined;
             bulletX = undefined;
             bulletArr.splice(0,1)
-            if(name == 'garbage') {
+            if(name == 'garbage' || value == '2500') {
                 return
             } if (name == 'humans'){
                 const audio = document.getElementById('waterExplosion')
