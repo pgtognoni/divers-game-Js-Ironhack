@@ -774,13 +774,14 @@ window.onload = () => {
 
     setTimeout(() => {
         music.play();
-    }, 1500)
+    }, 1000)
     music.volume = 0.3;
     
     document.addEventListener('keydown', event => {
         if (event.key.toLowerCase() === "s") {
             if (!music.paused) {
                 music.pause();
+                music.currentTime = 0;
             } else music.play()
         }
     })
