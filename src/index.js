@@ -691,6 +691,15 @@ const animate = () => {
         positionY = 0;
         speedX = 25;
         pipY = CANVAS_Y*4;
+        recursive1 = 37;
+        recursive2 = 27;
+        recursive3 = 67;
+        recursive4 = 117;
+        recursive5 = 97;
+        recursive6 = 107;
+        recursive7 = 127;
+        recursive8 = 57;
+        recursive9 = 77;
 
         const gameCanvas = document.getElementById('game-board');
         gameCanvas.classList.add('fade');
