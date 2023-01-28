@@ -217,8 +217,11 @@ ctx.scale(.1,.1)
 
 /*/--- Global Variables ---/*/
 const audio = document.getElementById('transition')
+audio.volume = 0.2
 const waterAudio = document.getElementById('underWater')
+waterAudio.volume = 0.2
 const music = document.getElementById('musicGame')
+music.volume = 0.1
 const minY = CANVAS_Y/2;
 const maxY = CANVAS_Y*10 - CANVAS_Y*10/3
 const positionX = CANVAS_X*10
@@ -670,6 +673,7 @@ const animate = () => {
     } else { 
         const gameOveraudio = document.getElementById('gameOverSound')
         gameOveraudio.play()
+        gameOveraudio.volume = 0.2;
         waterAudio.pause()
         bgctx.clearRect(0, 0, bgX, bgY)
         ctx.clearRect(0, 0, CANVAS_X*10, CANVAS_Y*10)
@@ -775,7 +779,7 @@ window.onload = () => {
     setTimeout(() => {
         music.play();
     }, 1000)
-    music.volume = 0.3;
+    music.volume = 0.1;
     
     document.addEventListener('keydown', event => {
         if (event.key.toLowerCase() === "s") {
