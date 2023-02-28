@@ -30,8 +30,6 @@ const srcObj = {
     ],
     1000: [
         './images/1000/submarine/submarine1.png',
-        './images/1000/submarine/submarine2.png',
-        './images/1000/diverHarpoon.png',
     ],
     2000: [
         './images/500/shark3.png',
@@ -41,7 +39,7 @@ const srcObj = {
         './images/5000/mine.png',
     ],
     5000: [
-        './images/5000/aquaman.png',
+        './images/1000/submarine/submarine2.png',
     ],
     scores: [
         './images/buttons/G50.png',
@@ -163,7 +161,6 @@ const createNew = (srcObj) => {
 }
 
 const imageArr = createNew(srcObj);
-console.log(imageArr)
 
 /*/--- End ---/*/
 
@@ -230,7 +227,7 @@ let isMovingDown = false
 let gameOver = false;
 let gameScore = 0;
 let positionY = 0;
-let speedX = 35;
+let speedX = 55;
 
 /* variables for recursive images */
 
@@ -356,15 +353,15 @@ const drawFish = (count) => {
         //objArr.array50.push(newObstacle)
     }  else if (count % recursive4 == 0) {
         const arr = imageArr[1].filter(item => {if (item.value == 1000 || item.value == 5000) return item })
-        const width = CANVAS_X*4;
-        const height = CANVAS_Y*4;
+        const width = CANVAS_X*2;
+        const height = CANVAS_Y*2;
         const newObstacle = createHuman(arr, width, height)
         humanObj.push(newObstacle)
         // objArr.array50.push(newObstacle)
     } else if (count % recursive5 == 0) {
         const arr = imageArr[0].filter(item => item.value == 2000)
-        const width = CANVAS_X*3.5;
-        const height = CANVAS_Y*3;
+        const width = CANVAS_X*2.5;
+        const height = CANVAS_Y*2;
         const newObstacle = createElement(arr, width, height)
         //objArr.array2000.push(newObstacle)
         objArr.push(newObstacle)
